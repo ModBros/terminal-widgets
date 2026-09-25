@@ -1,0 +1,201 @@
+{
+  "name": "graph",
+  "displayName": "Graph",
+  "description": "A scrolling history graph drawn with braille or block characters, like the CPU graph of btop.",
+  "filename": "Graph.tsx",
+  "config": [
+    {
+      "name": "metric",
+      "label": "Metric",
+      "description": "The metric to plot over time",
+      "type": "metric",
+      "filters": {
+        "valueTypes": ["Numeric", "Duration", "Currency"]
+      }
+    },
+    {
+      "name": "style",
+      "label": "Style",
+      "description": "Braille fits two values per character and four steps per line like btop, blocks fits one value per character and eight steps per line",
+      "type": "select",
+      "defaultValue": "braille",
+      "options": [
+        {
+          "value": "braille",
+          "label": "Braille ⣀⣤⣶⣿"
+        },
+        {
+          "value": "blocks",
+          "label": "Blocks ▂▄▆█"
+        }
+      ]
+    },
+    {
+      "name": "min",
+      "label": "Min Value",
+      "description": "The value at the bottom of the graph. Defaults to 0",
+      "type": "number"
+    },
+    {
+      "name": "max",
+      "label": "Max Value",
+      "description": "The value at the top of the graph. If not set, percentages use 100 and other metrics use the highest recorded value",
+      "type": "number"
+    },
+    {
+      "name": "hide_header",
+      "label": "Hide Header",
+      "description": "Hides the line with the label and the current value above the graph",
+      "type": "checkbox"
+    },
+    {
+      "name": "label",
+      "label": "Label",
+      "description": "The label in the header. Defaults to the metric name",
+      "type": "string"
+    },
+    {
+      "name": "hide_unit",
+      "label": "Hide Unit",
+      "description": "Shows the current value in the header without its unit",
+      "type": "checkbox"
+    },
+    {
+      "name": "precision",
+      "label": "Precision",
+      "description": "The number of decimal places of the current value. If not set, it is chosen based on the value",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use a monospace font for the best result. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels. Smaller fonts give a finer graph",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "text_color",
+      "label": "Label",
+      "description": "The color of the label in the header",
+      "type": "color"
+    },
+    {
+      "name": "value_color",
+      "label": "Value",
+      "description": "The color of the current value in the header",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the widget",
+      "type": "color"
+    },
+    {
+      "name": "color_mode",
+      "label": "Color Mode",
+      "description": "Gradient fades from the low color at the bottom to the critical color at the top, Threshold draws hard color bands at the thresholds, Solid always uses the low color",
+      "type": "select",
+      "defaultValue": "gradient",
+      "options": [
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "threshold",
+          "label": "Threshold"
+        },
+        {
+          "value": "solid",
+          "label": "Solid"
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "label": "Low Color",
+      "description": "The color at the bottom of the graph",
+      "type": "color"
+    },
+    {
+      "name": "warning_threshold",
+      "label": "Threshold (%)",
+      "description": "Height in percent at which the threshold mode switches to the warning color. Defaults to 50",
+      "type": "number",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "warning_color",
+      "label": "Color",
+      "description": "The color in the middle of the graph",
+      "type": "color"
+    },
+    {
+      "name": "critical_threshold",
+      "label": "Threshold (%)",
+      "description": "Height in percent at which the threshold mode switches to the critical color. Defaults to 80",
+      "type": "number",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "critical_color",
+      "label": "Color",
+      "description": "The color at the top of the graph",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    "metric",
+    {
+      "type": "fieldset",
+      "label": "Look and feel",
+      "collapsible": true,
+      "children": ["style", "min", "max", "font", "font_size"]
+    },
+    {
+      "type": "fieldset",
+      "label": "Header",
+      "collapsible": true,
+      "collapsed": true,
+      "children": [
+        "hide_header",
+        "label",
+        "hide_unit",
+        "precision",
+        "text_color",
+        "value_color"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "label": "Graph Colors & Thresholds",
+      "collapsible": true,
+      "collapsed": true,
+      "children": [
+        "color_mode",
+        "color",
+        {
+          "type": "fieldset",
+          "label": "Warning",
+          "children": ["warning_threshold", "warning_color"]
+        },
+        {
+          "type": "fieldset",
+          "label": "Critical",
+          "children": ["critical_threshold", "critical_color"]
+        },
+        "background_color"
+      ]
+    }
+  ]
+}

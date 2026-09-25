@@ -1,0 +1,97 @@
+{
+  "name": "panel",
+  "displayName": "Panel",
+  "description": "A box drawn with line characters and a title in its border, like the panels of btop. Place other widgets inside it.",
+  "filename": "Panel.tsx",
+  "config": [
+    {
+      "name": "title",
+      "label": "Title",
+      "description": "The title on the left side of the top border",
+      "type": "string"
+    },
+    {
+      "name": "title_right",
+      "label": "Right Title",
+      "description": "A second title on the right side of the top border",
+      "type": "string"
+    },
+    {
+      "name": "border_style",
+      "label": "Border Style",
+      "description": "The characters used for the border",
+      "type": "select",
+      "defaultValue": "rounded",
+      "options": [
+        {
+          "value": "rounded",
+          "label": "Rounded ╭─╮"
+        },
+        {
+          "value": "single",
+          "label": "Single ┌─┐"
+        },
+        {
+          "value": "double",
+          "label": "Double ╔═╗"
+        },
+        {
+          "value": "heavy",
+          "label": "Heavy ┏━┓"
+        },
+        {
+          "value": "ascii",
+          "label": "ASCII +-+"
+        }
+      ]
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use the same monospace font as the widgets inside the panel. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "border_color",
+      "label": "Border",
+      "description": "The color of the border",
+      "type": "color"
+    },
+    {
+      "name": "title_color",
+      "label": "Title",
+      "description": "The color of the titles",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the panel",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    "title",
+    "title_right",
+    {
+      "type": "fieldset",
+      "label": "Look and feel",
+      "collapsible": true,
+      "children": ["border_style", "font", "font_size"]
+    },
+    {
+      "type": "fieldset",
+      "label": "Colors",
+      "collapsible": true,
+      "collapsed": true,
+      "children": ["border_color", "title_color", "background_color"]
+    }
+  ]
+}

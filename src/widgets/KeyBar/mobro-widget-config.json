@@ -1,0 +1,381 @@
+{
+  "name": "key_bar",
+  "displayName": "Key Bar",
+  "description": "A row of up to 10 clickable function keys like the F1 Help F2 Setup bar at the bottom of htop. Each key can run an action.",
+  "filename": "KeyBar.tsx",
+  "config": [
+    {
+      "name": "key_count",
+      "label": "Number of Keys",
+      "description": "How many keys are shown, from 1 to 10. Defaults to 10",
+      "type": "number",
+      "min": 1,
+      "max": 10,
+      "defaultValue": 10
+    },
+    {
+      "name": "key_1_key",
+      "label": "Key",
+      "description": "The short key name of key 1",
+      "type": "string",
+      "defaultValue": "F1"
+    },
+    {
+      "name": "key_1_label",
+      "label": "Label",
+      "description": "The text next to key 1",
+      "type": "string",
+      "defaultValue": "Help"
+    },
+    {
+      "name": "key_1_action",
+      "label": "Action",
+      "description": "The action to run when key 1 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_2_key",
+      "label": "Key",
+      "description": "The short key name of key 2",
+      "type": "string",
+      "defaultValue": "F2"
+    },
+    {
+      "name": "key_2_label",
+      "label": "Label",
+      "description": "The text next to key 2",
+      "type": "string",
+      "defaultValue": "Setup"
+    },
+    {
+      "name": "key_2_action",
+      "label": "Action",
+      "description": "The action to run when key 2 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_3_key",
+      "label": "Key",
+      "description": "The short key name of key 3",
+      "type": "string",
+      "defaultValue": "F3"
+    },
+    {
+      "name": "key_3_label",
+      "label": "Label",
+      "description": "The text next to key 3",
+      "type": "string",
+      "defaultValue": "Search"
+    },
+    {
+      "name": "key_3_action",
+      "label": "Action",
+      "description": "The action to run when key 3 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_4_key",
+      "label": "Key",
+      "description": "The short key name of key 4",
+      "type": "string",
+      "defaultValue": "F4"
+    },
+    {
+      "name": "key_4_label",
+      "label": "Label",
+      "description": "The text next to key 4",
+      "type": "string",
+      "defaultValue": "Filter"
+    },
+    {
+      "name": "key_4_action",
+      "label": "Action",
+      "description": "The action to run when key 4 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_5_key",
+      "label": "Key",
+      "description": "The short key name of key 5",
+      "type": "string",
+      "defaultValue": "F5"
+    },
+    {
+      "name": "key_5_label",
+      "label": "Label",
+      "description": "The text next to key 5",
+      "type": "string",
+      "defaultValue": "Tree"
+    },
+    {
+      "name": "key_5_action",
+      "label": "Action",
+      "description": "The action to run when key 5 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_6_key",
+      "label": "Key",
+      "description": "The short key name of key 6",
+      "type": "string",
+      "defaultValue": "F6"
+    },
+    {
+      "name": "key_6_label",
+      "label": "Label",
+      "description": "The text next to key 6",
+      "type": "string",
+      "defaultValue": "SortBy"
+    },
+    {
+      "name": "key_6_action",
+      "label": "Action",
+      "description": "The action to run when key 6 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_7_key",
+      "label": "Key",
+      "description": "The short key name of key 7",
+      "type": "string",
+      "defaultValue": "F7"
+    },
+    {
+      "name": "key_7_label",
+      "label": "Label",
+      "description": "The text next to key 7",
+      "type": "string",
+      "defaultValue": "Nice -"
+    },
+    {
+      "name": "key_7_action",
+      "label": "Action",
+      "description": "The action to run when key 7 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_8_key",
+      "label": "Key",
+      "description": "The short key name of key 8",
+      "type": "string",
+      "defaultValue": "F8"
+    },
+    {
+      "name": "key_8_label",
+      "label": "Label",
+      "description": "The text next to key 8",
+      "type": "string",
+      "defaultValue": "Nice +"
+    },
+    {
+      "name": "key_8_action",
+      "label": "Action",
+      "description": "The action to run when key 8 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_9_key",
+      "label": "Key",
+      "description": "The short key name of key 9",
+      "type": "string",
+      "defaultValue": "F9"
+    },
+    {
+      "name": "key_9_label",
+      "label": "Label",
+      "description": "The text next to key 9",
+      "type": "string",
+      "defaultValue": "Kill"
+    },
+    {
+      "name": "key_9_action",
+      "label": "Action",
+      "description": "The action to run when key 9 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "key_10_key",
+      "label": "Key",
+      "description": "The short key name of key 10",
+      "type": "string",
+      "defaultValue": "F10"
+    },
+    {
+      "name": "key_10_label",
+      "label": "Label",
+      "description": "The text next to key 10",
+      "type": "string",
+      "defaultValue": "Quit"
+    },
+    {
+      "name": "key_10_action",
+      "label": "Action",
+      "description": "The action to run when key 10 is clicked",
+      "type": "action"
+    },
+    {
+      "name": "label_width",
+      "label": "Label Width",
+      "description": "The minimum width of each label in characters. Defaults to 6",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "hide_fill",
+      "label": "Don't Fill Width",
+      "description": "By default the label color fills the rest of the line like in htop",
+      "type": "checkbox"
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use a monospace font for the best result. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels. The widget width decides how many characters fit",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "key_color",
+      "label": "Key Text",
+      "description": "The text color of the keys",
+      "type": "color"
+    },
+    {
+      "name": "key_background_color",
+      "label": "Key Background",
+      "description": "The background color of the keys",
+      "type": "color"
+    },
+    {
+      "name": "label_color",
+      "label": "Label Text",
+      "description": "The text color of the labels",
+      "type": "color"
+    },
+    {
+      "name": "label_background_color",
+      "label": "Label Background",
+      "description": "The background color of the labels",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the widget",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    {
+      "type": "tabs",
+      "children": [
+        {
+          "type": "tab",
+          "label": "Keys",
+          "children": [
+            "key_count",
+            {
+              "type": "fieldset",
+              "label": "F1 Help",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_1_key", "key_1_label", "key_1_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F2 Setup",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_2_key", "key_2_label", "key_2_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F3 Search",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_3_key", "key_3_label", "key_3_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F4 Filter",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_4_key", "key_4_label", "key_4_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F5 Tree",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_5_key", "key_5_label", "key_5_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F6 SortBy",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_6_key", "key_6_label", "key_6_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F7 Nice -",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_7_key", "key_7_label", "key_7_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F8 Nice +",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_8_key", "key_8_label", "key_8_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F9 Kill",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_9_key", "key_9_label", "key_9_action"]
+            },
+            {
+              "type": "fieldset",
+              "label": "F10 Quit",
+              "collapsible": true,
+              "collapsed": true,
+              "children": ["key_10_key", "key_10_label", "key_10_action"]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "label": "Look and feel",
+          "children": [
+            {
+              "type": "fieldset",
+              "label": "Layout",
+              "collapsible": true,
+              "children": ["label_width", "hide_fill", "font", "font_size"]
+            },
+            {
+              "type": "fieldset",
+              "label": "Colors",
+              "collapsible": true,
+              "children": [
+                "key_color",
+                "key_background_color",
+                "label_color",
+                "label_background_color",
+                "background_color"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

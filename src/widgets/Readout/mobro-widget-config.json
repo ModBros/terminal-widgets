@@ -1,0 +1,176 @@
+{
+  "name": "readout",
+  "displayName": "Readout",
+  "description": "A single line of terminal text such as \"Load: 42%\", with an optional prompt and blinking cursor.",
+  "filename": "Readout.tsx",
+  "config": [
+    {
+      "name": "metric",
+      "label": "Metric",
+      "description": "The metric to display",
+      "type": "metric",
+      "filters": {
+        "valueTypes": [
+          "Numeric",
+          "Duration",
+          "Currency",
+          "String",
+          "Boolean",
+          "DateTime",
+          "DateOnly",
+          "TimeOnly"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "label": "Label",
+      "description": "The text in front of the value. Defaults to the metric name",
+      "type": "string"
+    },
+    {
+      "name": "hide_label",
+      "label": "Hide Label",
+      "description": "Shows only the value",
+      "type": "checkbox"
+    },
+    {
+      "name": "separator",
+      "label": "Separator",
+      "description": "The text between label and value. Defaults to \": \"",
+      "type": "string"
+    },
+    {
+      "name": "prefix",
+      "label": "Prompt",
+      "description": "Text at the start of the line, e.g. \"$ \" or \"> \"",
+      "type": "string"
+    },
+    {
+      "name": "show_cursor",
+      "label": "Blinking Cursor",
+      "description": "Shows a blinking block cursor after the value",
+      "type": "checkbox"
+    },
+    {
+      "name": "align",
+      "label": "Alignment",
+      "description": "Spread puts the label on the left and the value on the right",
+      "type": "select",
+      "defaultValue": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "spread",
+          "label": "Spread"
+        }
+      ]
+    },
+    {
+      "name": "leader",
+      "label": "Leader",
+      "description": "The character that fills the space between label and value when the alignment is Spread, e.g. \".\"",
+      "type": "string"
+    },
+    {
+      "name": "hide_unit",
+      "label": "Hide Unit",
+      "description": "Shows the value without its unit",
+      "type": "checkbox"
+    },
+    {
+      "name": "precision",
+      "label": "Precision",
+      "description": "The number of decimal places. If not set, it is chosen based on the value",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use a monospace font for the best result. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels. The text shrinks when it does not fit the widget",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "prompt_color",
+      "label": "Prompt",
+      "description": "The color of the prompt",
+      "type": "color"
+    },
+    {
+      "name": "text_color",
+      "label": "Label",
+      "description": "The color of the label, separator and leader",
+      "type": "color"
+    },
+    {
+      "name": "value_color",
+      "label": "Value",
+      "description": "The color of the value",
+      "type": "color"
+    },
+    {
+      "name": "cursor_color",
+      "label": "Cursor",
+      "description": "The color of the cursor",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the widget",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    "metric",
+    {
+      "type": "fieldset",
+      "label": "Text",
+      "collapsible": true,
+      "children": [
+        "label",
+        "hide_label",
+        "separator",
+        "prefix",
+        "show_cursor",
+        "hide_unit",
+        "precision"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "label": "Look and feel",
+      "collapsible": true,
+      "collapsed": true,
+      "children": ["align", "leader", "font", "font_size"]
+    },
+    {
+      "type": "fieldset",
+      "label": "Colors",
+      "collapsible": true,
+      "collapsed": true,
+      "children": [
+        "prompt_color",
+        "text_color",
+        "value_color",
+        "cursor_color",
+        "background_color"
+      ]
+    }
+  ]
+}

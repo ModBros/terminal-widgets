@@ -1,0 +1,329 @@
+{
+  "name": "table",
+  "displayName": "Table",
+  "description": "A list of metrics with a colored header, sorting, row highlighting and optional mini bars, like the process list of htop.",
+  "filename": "Table.tsx",
+  "config": [
+    {
+      "name": "rows",
+      "label": "Rows",
+      "description": "One row per metric",
+      "type": "repeater",
+      "config": [
+        {
+          "name": "metric",
+          "label": "Metric",
+          "description": "The metric to display in this row",
+          "type": "metric",
+          "filters": {
+            "valueTypes": [
+              "Numeric",
+              "Duration",
+              "Currency",
+              "String",
+              "Boolean",
+              "DateTime",
+              "DateOnly",
+              "TimeOnly"
+            ]
+          }
+        },
+        {
+          "name": "label",
+          "label": "Label",
+          "description": "The name of the row. Defaults to the metric name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "header_name",
+      "label": "Name Header",
+      "description": "The header of the name column. Defaults to NAME",
+      "type": "string"
+    },
+    {
+      "name": "header_value",
+      "label": "Value Header",
+      "description": "The header of the value column. Defaults to VALUE",
+      "type": "string"
+    },
+    {
+      "name": "hide_header",
+      "label": "Hide Header",
+      "description": "Hides the header line",
+      "type": "checkbox"
+    },
+    {
+      "name": "sort",
+      "label": "Sort",
+      "description": "Sorts the rows by their numeric value. Rows without a numeric value go last",
+      "type": "select",
+      "defaultValue": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "desc",
+          "label": "Highest first"
+        },
+        {
+          "value": "asc",
+          "label": "Lowest first"
+        }
+      ]
+    },
+    {
+      "name": "limit",
+      "label": "Max Rows",
+      "description": "Shows only the first rows after sorting. Leave empty to show all rows",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "highlight_row",
+      "label": "Highlight Row",
+      "description": "Highlights the row at this position like the htop cursor, e.g. 1 for the top row. Leave empty to highlight nothing",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "show_bar",
+      "label": "Show Bars",
+      "description": "Shows a btop style mini bar in front of each value",
+      "type": "checkbox"
+    },
+    {
+      "name": "bar_width",
+      "label": "Bar Width",
+      "description": "The width of the mini bars in characters. Defaults to 10",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "hide_unit",
+      "label": "Hide Unit",
+      "description": "Shows the values without their units",
+      "type": "checkbox"
+    },
+    {
+      "name": "precision",
+      "label": "Precision",
+      "description": "The number of decimal places. If not set, it is chosen based on the value",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "max",
+      "label": "Max Value",
+      "description": "The value of a full mini bar. If not set, percentages use 100 and other metrics use their highest recorded value",
+      "type": "number"
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use a monospace font for the best result. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels. The widget width decides how many characters fit",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "text_color",
+      "label": "Names",
+      "description": "The color of the row names",
+      "type": "color"
+    },
+    {
+      "name": "value_color",
+      "label": "Values",
+      "description": "The color of the values",
+      "type": "color"
+    },
+    {
+      "name": "header_text_color",
+      "label": "Header Text",
+      "description": "The text color of the header",
+      "type": "color"
+    },
+    {
+      "name": "header_background_color",
+      "label": "Header Background",
+      "description": "The background color of the header",
+      "type": "color"
+    },
+    {
+      "name": "highlight_text_color",
+      "label": "Highlight Text",
+      "description": "The text color of the highlighted row",
+      "type": "color"
+    },
+    {
+      "name": "highlight_background_color",
+      "label": "Highlight Background",
+      "description": "The background color of the highlighted row",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the widget",
+      "type": "color"
+    },
+    {
+      "name": "empty_color",
+      "label": "Empty",
+      "description": "The color of the empty squares of the mini bars",
+      "type": "color"
+    },
+    {
+      "name": "color_mode",
+      "label": "Color Mode",
+      "description": "Gradient colors every cell by its position in the bar, Threshold colors each bar by its current value, Solid always uses the low color",
+      "type": "select",
+      "defaultValue": "gradient",
+      "options": [
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "threshold",
+          "label": "Threshold"
+        },
+        {
+          "value": "solid",
+          "label": "Solid"
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "label": "Low Color",
+      "description": "The color of a low load",
+      "type": "color"
+    },
+    {
+      "name": "warning_threshold",
+      "label": "Threshold (%)",
+      "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
+      "type": "number",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "warning_color",
+      "label": "Color",
+      "description": "The color of a medium load",
+      "type": "color"
+    },
+    {
+      "name": "critical_threshold",
+      "label": "Threshold (%)",
+      "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
+      "type": "number",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "critical_color",
+      "label": "Color",
+      "description": "The color of a high load",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    {
+      "type": "tabs",
+      "children": [
+        {
+          "type": "tab",
+          "label": "Rows",
+          "children": ["rows"]
+        },
+        {
+          "type": "tab",
+          "label": "Layout",
+          "children": [
+            {
+              "type": "fieldset",
+              "label": "Header",
+              "collapsible": true,
+              "children": ["header_name", "header_value", "hide_header"]
+            },
+            {
+              "type": "fieldset",
+              "label": "Rows",
+              "collapsible": true,
+              "children": [
+                "sort",
+                "limit",
+                "highlight_row",
+                "hide_unit",
+                "precision"
+              ]
+            },
+            {
+              "type": "fieldset",
+              "label": "Bars",
+              "collapsible": true,
+              "children": ["show_bar", "bar_width", "max"]
+            },
+            {
+              "type": "fieldset",
+              "label": "Font",
+              "collapsible": true,
+              "children": ["font", "font_size"]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "label": "Colors",
+          "children": [
+            {
+              "type": "fieldset",
+              "label": "Text",
+              "collapsible": true,
+              "children": [
+                "text_color",
+                "value_color",
+                "header_text_color",
+                "header_background_color",
+                "highlight_text_color",
+                "highlight_background_color",
+                "background_color"
+              ]
+            },
+            {
+              "type": "fieldset",
+              "label": "Bar Colors & Thresholds",
+              "collapsible": true,
+              "children": [
+                "empty_color",
+                "color_mode",
+                "color",
+                {
+                  "type": "fieldset",
+                  "label": "Warning",
+                  "children": ["warning_threshold", "warning_color"]
+                },
+                {
+                  "type": "fieldset",
+                  "label": "Critical",
+                  "children": ["critical_threshold", "critical_color"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
