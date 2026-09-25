@@ -13,14 +13,11 @@ import { Lines, Screen } from '../../components/Screen'
 import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
 import { joinValue, useMetricReading } from '../../utils/metric'
 import { LineBuilder, repeat } from '../../utils/text'
-import {
-  defaultPromptColor,
-  defaultTextColor,
-  defaultValueColor
-} from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 const Readout: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols } = useTerminalGrid(font)
   const metricConfigured = useIsMetricFieldConfigured({ field: 'metric' })
   const customLabel = useStringField({ field: 'label' })
@@ -34,19 +31,19 @@ const Readout: FunctionComponent = () => {
   const precision = useNumberField({ field: 'precision' })
   const promptColor = useColorField({
     field: 'prompt_color',
-    defaultColor: defaultPromptColor
+    defaultColor: theme.prompt
   })
   const textColor = useColorField({
     field: 'text_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   })
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: defaultValueColor
+    defaultColor: theme.value
   })
   const cursorColor = useColorField({
     field: 'cursor_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   })
   const reading = useMetricReading({ field: 'metric', precision, max: null })
 

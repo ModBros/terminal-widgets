@@ -81,6 +81,23 @@
       "min": 1
     },
     {
+      "name": "theme",
+      "label": "Theme",
+      "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
+      "type": "select",
+      "defaultValue": "color",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color (htop, btop)"
+        },
+        {
+          "value": "mono",
+          "label": "Monochrome (top)"
+        }
+      ]
+    },
+    {
       "name": "text_color",
       "label": "Label",
       "description": "The color of the label in the header",
@@ -160,7 +177,7 @@
       "type": "fieldset",
       "label": "Look and feel",
       "collapsible": true,
-      "children": ["style", "min", "max", "font", "font_size"]
+      "children": ["theme", "style", "min", "max", "font", "font_size"]
     },
     {
       "type": "fieldset",

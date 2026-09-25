@@ -5,7 +5,7 @@
 
 **Widget pack for MoBro**
 
-Terminal style system monitor widgets inspired by htop and btop: text meters, meter grids, braille graphs, box drawing panels, tables, readouts and function key bars.
+Terminal style system monitor widgets inspired by top, htop and btop: text meters, meter grids, braille graphs, box drawing panels, top style summary lines, tables, readouts and function key bars.
 
 ## Documentation
 

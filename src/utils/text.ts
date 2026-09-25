@@ -2,6 +2,7 @@ export interface SegmentStyle {
   color?: string
   background?: string
   blink?: boolean
+  bold?: boolean
 }
 
 export interface Segment extends SegmentStyle {
@@ -14,7 +15,8 @@ function isSameStyle(a: SegmentStyle, b: SegmentStyle): boolean {
   return (
     a.color === b.color &&
     a.background === b.background &&
-    Boolean(a.blink) === Boolean(b.blink)
+    Boolean(a.blink) === Boolean(b.blink) &&
+    Boolean(a.bold) === Boolean(b.bold)
   )
 }
 
@@ -41,6 +43,7 @@ export class LineBuilder {
         color: style.color,
         background: style.background,
         blink: style.blink,
+        bold: style.bold,
         text
       })
     }

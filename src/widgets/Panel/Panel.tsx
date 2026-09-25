@@ -7,7 +7,7 @@ import {
 import { Lines, Screen } from '../../components/Screen'
 import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
 import { Line, LineBuilder, repeat, truncate } from '../../utils/text'
-import { defaultBoxColor, defaultTitleColor } from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 interface BorderChars {
   topLeft: string
@@ -86,6 +86,7 @@ function fitTitle(title: string | null, space: number): string {
 
 const Panel: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols, rows } = useTerminalGrid(font)
   const title = useStringField({ field: 'title' })
   const titleRight = useStringField({ field: 'title_right' })
@@ -95,11 +96,11 @@ const Panel: FunctionComponent = () => {
   })
   const borderColor = useColorField({
     field: 'border_color',
-    defaultColor: defaultBoxColor
+    defaultColor: theme.box
   })
   const titleColor = useColorField({
     field: 'title_color',
-    defaultColor: defaultTitleColor
+    defaultColor: theme.title
   })
 
   const chars = borders[borderStyle ?? 'rounded'] ?? borders.rounded

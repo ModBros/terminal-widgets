@@ -12,7 +12,11 @@ import styled from 'styled-components'
 import { Lines, Screen } from '../../components/Screen'
 import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
 import { useLevelColors } from '../../utils/colors'
-import { buildMeter, resolveLabelWidth } from '../../utils/meter'
+import {
+  buildMeter,
+  minTopValueWidth,
+  resolveLabelWidth
+} from '../../utils/meter'
 import {
   ItemReading,
   ReadingCollector,
@@ -20,11 +24,7 @@ import {
   useReadings
 } from '../../utils/readings'
 import { clamp, Line, LineBuilder, repeat } from '../../utils/text'
-import {
-  defaultBracketColor,
-  defaultDimColor,
-  defaultTextColor
-} from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 const Hidden = styled.div`
   display: none;
@@ -40,6 +40,7 @@ function getValueText(reading: ItemReading | undefined, hideValue: boolean) {
 
 const MeterGridContent: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols } = useTerminalGrid(font)
   const items = useRepeaterField({ field: 'metrics' })
   const readings = useReadings()
@@ -59,19 +60,19 @@ const MeterGridContent: FunctionComponent = () => {
   const max = useNumberField({ field: 'max' })
   const labelColor = useColorField({
     field: 'text_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   }).toRgbaCss()
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   }).toRgbaCss()
   const bracketColor = useColorField({
     field: 'bracket_color',
-    defaultColor: defaultBracketColor
+    defaultColor: theme.bracket
   }).toRgbaCss()
   const emptyColor = useColorField({
     field: 'empty_color',
-    defaultColor: defaultDimColor
+    defaultColor: theme.dim
   }).toRgbaCss()
   const { cellColor } = useLevelColors()
 
@@ -101,6 +102,13 @@ const MeterGridContent: FunctionComponent = () => {
     return String(index + (indexOffset ?? 0))
   })
   const labelWidth = resolveLabelWidth(labels, labelWidthValue)
+  const valueTexts = items.map((_item, index) =>
+    getValueText(readings[index], hideValue)
+  )
+  // the top style puts the values in front of the bars, so they share a width
+  const valueWidth = hideValue
+    ? 0
+    : Math.max(minTopValueWidth, ...valueTexts.map((text) => text.length))
 
   // fill column by column like the htop CPU meters
   const lines: Line[] = []
@@ -128,7 +136,8 @@ const MeterGridContent: FunctionComponent = () => {
           label: labels[index],
           labelWidth,
           style: style ?? 'htop',
-          valueText: getValueText(reading, hideValue),
+          valueText: valueTexts[index],
+          valueWidth,
           percent: reading?.percent ?? 0,
           labelColor,
           valueColor,

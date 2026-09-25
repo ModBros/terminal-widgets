@@ -240,6 +240,23 @@
       "min": 1
     },
     {
+      "name": "theme",
+      "label": "Theme",
+      "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
+      "type": "select",
+      "defaultValue": "color",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color (htop, btop)"
+        },
+        {
+          "value": "mono",
+          "label": "Monochrome (top)"
+        }
+      ]
+    },
+    {
       "name": "key_color",
       "label": "Key Text",
       "description": "The text color of the keys",
@@ -366,6 +383,7 @@
               "label": "Colors",
               "collapsible": true,
               "children": [
+                "theme",
                 "key_color",
                 "key_background_color",
                 "label_color",

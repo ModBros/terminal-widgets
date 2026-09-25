@@ -14,11 +14,7 @@ import {
   useTerminalGrid
 } from '../../utils/useTerminalFont'
 import { clamp, padEnd, SegmentStyle } from '../../utils/text'
-import {
-  defaultHighlightBackgroundColor,
-  defaultHighlightTextColor,
-  defaultTitleColor
-} from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 // action fields are not allowed inside repeaters, so keys are fixed slots
 // named key_<slot>_key, key_<slot>_label and key_<slot>_action
@@ -91,22 +87,23 @@ const KeySlot = (props: KeySlotProps) => {
 
 const KeyBar: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols } = useTerminalGrid(font)
   const keyCount = useNumberField({ field: 'key_count', defaultValue: maxKeys })
   const labelWidth = useNumberField({ field: 'label_width', defaultValue: 6 })
   const hideFill = useCheckboxField({ field: 'hide_fill' })
   const keyColor = useColorField({
     field: 'key_color',
-    defaultColor: defaultTitleColor
+    defaultColor: theme.title
   })
   const keyBackgroundColor = useColorField({ field: 'key_background_color' })
   const labelColor = useColorField({
     field: 'label_color',
-    defaultColor: defaultHighlightTextColor
+    defaultColor: theme.highlightText
   })
   const labelBackgroundColor = useColorField({
     field: 'label_background_color',
-    defaultColor: defaultHighlightBackgroundColor
+    defaultColor: theme.highlightBackground
   })
 
   const count = clamp(Math.floor(keyCount ?? maxKeys), 0, maxKeys)

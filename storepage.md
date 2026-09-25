@@ -1,15 +1,18 @@
-Terminal style system monitor widgets inspired by htop and btop.
+Terminal style system monitor widgets inspired by top, htop and btop.
 
 Every widget is drawn with plain characters in a monospace font: text meters, braille graphs, box drawing panels, process style tables and function key bars.\
 Combine them to build a dashboard that looks like your favorite terminal monitor.
 
 All widgets fit as many characters as the widget size and font size allow, so you can resize them freely.\
-For the best result use a monospace font that includes box drawing, block and braille characters, such as Cascadia Mono. 
+For the best result use a monospace font that includes box drawing, block and braille characters, such as Cascadia Mono.
+
+Every widget has a **Theme** option: **Color** uses the htop and btop palette, **Monochrome** draws everything in one text color with reverse video headers like plain `top`.
+Colors you set yourself are kept in both themes.
 
 #### Meter
 
 A single line text meter like the CPU and memory bars of htop and btop.
-Choose the htop style `CPU[||||||| 42.1%]`, the btop style `CPU ■■■■■■■■■■ 42.1%` or smooth blocks.
+Choose the htop style `CPU[||||||| 42.1%]`, the btop style `CPU ■■■■■■■■■■ 42.1%`, the top style `CPU  42.1% [|||||||   ]` or smooth blocks.
 Bars are colored by a low, warning and critical color, either as a gradient along the bar or by thresholds.
 
 **Supports:** Numeric, Duration, and Currency metrics
@@ -20,6 +23,13 @@ Many aligned meters in columns, like the per core CPU meters at the top of htop.
 Add one metric per core, pick the number of columns, and label the meters with index numbers or names.
 
 **Supports:** Numeric, Duration, and Currency metrics
+
+#### Summary
+
+A line of labeled values like the summary area at the top of `top`, e.g. `%Cpu(s):  5.9 us,  2.0 sy, 91.8 id`.
+Stack several of them to rebuild the whole top header, with fixed value widths and bold values just like top.
+
+**Supports:** Numeric, Duration, Currency, Text, Boolean, and date/time metrics
 
 #### Graph
 

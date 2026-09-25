@@ -86,7 +86,8 @@ export const SegmentView = (props: SegmentViewProps) => {
   const { segment, font } = props
   const style: CSSProperties = {
     color: segment.color,
-    backgroundColor: segment.background
+    backgroundColor: segment.background,
+    fontWeight: segment.bold ? 'bold' : undefined
   }
   const content = renderText(segment.text, font)
 

@@ -28,15 +28,7 @@ import {
   repeat,
   withBackground
 } from '../../utils/text'
-import {
-  defaultDimColor,
-  defaultHeaderBackgroundColor,
-  defaultHeaderTextColor,
-  defaultHighlightBackgroundColor,
-  defaultHighlightTextColor,
-  defaultTextColor,
-  defaultValueColor
-} from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 const Hidden = styled.div`
   display: none;
@@ -61,6 +53,7 @@ function compareEntries(a: Entry, b: Entry, direction: number): number {
 
 const TableContent: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols } = useTerminalGrid(font)
   const items = useRepeaterField({ field: 'rows' })
   const readings = useReadings()
@@ -83,31 +76,31 @@ const TableContent: FunctionComponent = () => {
   const max = useNumberField({ field: 'max' })
   const textColor = useColorField({
     field: 'text_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   }).toRgbaCss()
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: defaultValueColor
+    defaultColor: theme.value
   }).toRgbaCss()
   const emptyColor = useColorField({
     field: 'empty_color',
-    defaultColor: defaultDimColor
+    defaultColor: theme.dim
   }).toRgbaCss()
   const headerTextColor = useColorField({
     field: 'header_text_color',
-    defaultColor: defaultHeaderTextColor
+    defaultColor: theme.headerText
   }).toRgbaCss()
   const headerBackgroundColor = useColorField({
     field: 'header_background_color',
-    defaultColor: defaultHeaderBackgroundColor
+    defaultColor: theme.headerBackground
   }).toRgbaCss()
   const highlightTextColor = useColorField({
     field: 'highlight_text_color',
-    defaultColor: defaultHighlightTextColor
+    defaultColor: theme.highlightText
   }).toRgbaCss()
   const highlightBackgroundColor = useColorField({
     field: 'highlight_background_color',
-    defaultColor: defaultHighlightBackgroundColor
+    defaultColor: theme.highlightBackground
   }).toRgbaCss()
   const { cellColor } = useLevelColors()
 

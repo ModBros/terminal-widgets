@@ -5,13 +5,8 @@ import {
   useNumberField,
   useSelectField
 } from '@modbros/dashboard-sdk'
-import {
-  defaultCriticalThreshold,
-  defaultHighColor,
-  defaultLowColor,
-  defaultMidColor,
-  defaultWarningThreshold
-} from './constants'
+import { defaultCriticalThreshold, defaultWarningThreshold } from './constants'
+import { useThemeColors } from './theme'
 import { clamp } from './text'
 
 export interface LevelColors {
@@ -23,17 +18,18 @@ export interface LevelColors {
 }
 
 export function useLevelColors(): LevelColors {
+  const theme = useThemeColors()
   const low = useColorField({
     field: 'color',
-    defaultColor: defaultLowColor
+    defaultColor: theme.low
   }).toRgbaCss()
   const mid = useColorField({
     field: 'warning_color',
-    defaultColor: defaultMidColor
+    defaultColor: theme.mid
   }).toRgbaCss()
   const high = useColorField({
     field: 'critical_color',
-    defaultColor: defaultHighColor
+    defaultColor: theme.high
   }).toRgbaCss()
   const mode = useSelectField({ field: 'color_mode', defaultValue: 'gradient' })
   const warning = useNumberField({

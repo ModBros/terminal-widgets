@@ -80,7 +80,7 @@
     {
       "name": "style",
       "label": "Style",
-      "description": "htop draws pipes inside brackets with the value in the bar, btop draws squares with the value behind the bar, blocks draws a smooth bar with partial blocks",
+      "description": "htop draws pipes inside brackets with the value in the bar, btop draws squares with the value behind the bar, blocks draws a smooth bar with partial blocks, top draws the value in front of a plain bar",
       "type": "select",
       "defaultValue": "htop",
       "options": [
@@ -95,6 +95,10 @@
         {
           "value": "blocks",
           "label": "Blocks ████▌"
+        },
+        {
+          "value": "top",
+          "label": "top 42.1% [||||    ]"
         }
       ]
     },
@@ -135,6 +139,23 @@
       "description": "The font size in pixels. The widget width decides how many characters fit",
       "type": "number",
       "min": 1
+    },
+    {
+      "name": "theme",
+      "label": "Theme",
+      "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
+      "type": "select",
+      "defaultValue": "color",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color (htop, btop)"
+        },
+        {
+          "value": "mono",
+          "label": "Monochrome (top)"
+        }
+      ]
     },
     {
       "name": "text_color",
@@ -268,6 +289,7 @@
           "type": "tab",
           "label": "Colors",
           "children": [
+            "theme",
             {
               "type": "fieldset",
               "label": "Text",

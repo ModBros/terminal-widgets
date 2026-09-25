@@ -16,10 +16,11 @@ import { buildGraph, samplesPerColumn } from '../../utils/graph'
 import { joinValue, useMetricReading } from '../../utils/metric'
 import { useValueHistory } from '../../utils/useValueHistory'
 import { Line, LineBuilder, padEnd } from '../../utils/text'
-import { defaultTextColor, defaultValueColor } from '../../utils/constants'
+import { useThemeColors } from '../../utils/theme'
 
 const Graph: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols, rows } = useTerminalGrid(font)
   const metricConfigured = useIsMetricFieldConfigured({ field: 'metric' })
   const style = useSelectField({ field: 'style', defaultValue: 'braille' })
@@ -31,11 +32,11 @@ const Graph: FunctionComponent = () => {
   const hideUnit = useCheckboxField({ field: 'hide_unit' })
   const textColor = useColorField({
     field: 'text_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   })
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: defaultValueColor
+    defaultColor: theme.value
   })
   const { cellColor } = useLevelColors()
   const reading = useMetricReading({

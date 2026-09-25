@@ -12,16 +12,17 @@ import {
 import { Lines, Screen } from '../../components/Screen'
 import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
 import { useLevelColors } from '../../utils/colors'
-import { buildMeter, resolveLabelWidth } from '../../utils/meter'
-import { joinValue, useMetricReading } from '../../utils/metric'
 import {
-  defaultBracketColor,
-  defaultDimColor,
-  defaultTextColor
-} from '../../utils/constants'
+  buildMeter,
+  minTopValueWidth,
+  resolveLabelWidth
+} from '../../utils/meter'
+import { joinValue, useMetricReading } from '../../utils/metric'
+import { useThemeColors } from '../../utils/theme'
 
 const Meter: FunctionComponent = () => {
   const font = useTerminalFont()
+  const theme = useThemeColors()
   const { cols } = useTerminalGrid(font)
   const metricConfigured = useIsMetricFieldConfigured({ field: 'metric' })
   const customLabel = useStringField({ field: 'label' })
@@ -34,19 +35,19 @@ const Meter: FunctionComponent = () => {
   const max = useNumberField({ field: 'max' })
   const labelColor = useColorField({
     field: 'text_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   })
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: defaultTextColor
+    defaultColor: theme.text
   })
   const bracketColor = useColorField({
     field: 'bracket_color',
-    defaultColor: defaultBracketColor
+    defaultColor: theme.bracket
   })
   const emptyColor = useColorField({
     field: 'empty_color',
-    defaultColor: defaultDimColor
+    defaultColor: theme.dim
   })
   const { cellColor } = useLevelColors()
   const reading = useMetricReading({ field: 'metric', precision, max })
@@ -69,6 +70,7 @@ const Meter: FunctionComponent = () => {
     labelWidth: resolveLabelWidth([label], labelWidth),
     style: style ?? 'htop',
     valueText: hideValue ? '' : valueText,
+    valueWidth: hideValue ? 0 : minTopValueWidth,
     percent: reading.percent,
     labelColor: labelColor.toRgbaCss(),
     valueColor: valueColor.toRgbaCss(),

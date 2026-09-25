@@ -1,0 +1,197 @@
+{
+  "name": "summary",
+  "displayName": "Summary",
+  "description": "A line of labeled values like the summary area of top, e.g. \"%Cpu(s):  5.9 us,  2.0 sy, 91.8 id\".",
+  "filename": "Summary.tsx",
+  "config": [
+    {
+      "name": "items",
+      "label": "Values",
+      "description": "One entry per value in the line",
+      "type": "repeater",
+      "config": [
+        {
+          "name": "metric",
+          "label": "Metric",
+          "description": "The metric of this value",
+          "type": "metric",
+          "filters": {
+            "valueTypes": [
+              "Numeric",
+              "Duration",
+              "Currency",
+              "String",
+              "Boolean",
+              "DateTime",
+              "DateOnly",
+              "TimeOnly"
+            ]
+          }
+        },
+        {
+          "name": "label",
+          "label": "Label",
+          "description": "The short name next to the value, e.g. \"us\" or \"total\". Defaults to the metric name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "title",
+      "label": "Title",
+      "description": "The text at the start of the line, e.g. \"%Cpu(s):\" or \"MiB Mem :\"",
+      "type": "string"
+    },
+    {
+      "name": "title_width",
+      "label": "Title Width",
+      "description": "The minimum width of the title in characters. Give stacked lines the same width so their values line up",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "label_position",
+      "label": "Labels",
+      "description": "Where the label of each value goes. top puts it after the value",
+      "type": "select",
+      "defaultValue": "after",
+      "options": [
+        {
+          "value": "after",
+          "label": "After the value (5.9 us)"
+        },
+        {
+          "value": "before",
+          "label": "Before the value (us 5.9)"
+        },
+        {
+          "value": "none",
+          "label": "No labels (0.52, 0.58)"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "label": "Separator",
+      "description": "The text between two values. Defaults to \", \"",
+      "type": "string"
+    },
+    {
+      "name": "value_width",
+      "label": "Value Width",
+      "description": "The minimum width of each value in characters. Values are right aligned, so they stay in place while they change",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "bold_values",
+      "label": "Bold Values",
+      "description": "Draws the values in bold like top",
+      "type": "checkbox"
+    },
+    {
+      "name": "hide_unit",
+      "label": "Hide Unit",
+      "description": "Shows the values without their units, like top",
+      "type": "checkbox"
+    },
+    {
+      "name": "precision",
+      "label": "Precision",
+      "description": "The number of decimal places. If not set, it is chosen based on the value",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "font",
+      "label": "Font",
+      "description": "Use a monospace font for the best result. Defaults to Cascadia Mono, Consolas or the system monospace font",
+      "type": "font"
+    },
+    {
+      "name": "font_size",
+      "label": "Font Size",
+      "description": "The font size in pixels. The text shrinks when it does not fit the widget",
+      "type": "number",
+      "min": 1
+    },
+    {
+      "name": "theme",
+      "label": "Theme",
+      "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
+      "type": "select",
+      "defaultValue": "color",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color (htop, btop)"
+        },
+        {
+          "value": "mono",
+          "label": "Monochrome (top)"
+        }
+      ]
+    },
+    {
+      "name": "title_color",
+      "label": "Title",
+      "description": "The color of the title",
+      "type": "color"
+    },
+    {
+      "name": "text_color",
+      "label": "Labels",
+      "description": "The color of the labels and separators",
+      "type": "color"
+    },
+    {
+      "name": "value_color",
+      "label": "Values",
+      "description": "The color of the values",
+      "type": "color"
+    },
+    {
+      "name": "background_color",
+      "label": "Background",
+      "description": "The background color of the widget",
+      "type": "color"
+    }
+  ],
+  "layout": [
+    "items",
+    {
+      "type": "fieldset",
+      "label": "Text",
+      "collapsible": true,
+      "children": [
+        "title",
+        "title_width",
+        "label_position",
+        "separator",
+        "value_width",
+        "bold_values",
+        "hide_unit",
+        "precision"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "label": "Look and feel",
+      "collapsible": true,
+      "collapsed": true,
+      "children": ["theme", "font", "font_size"]
+    },
+    {
+      "type": "fieldset",
+      "label": "Colors",
+      "collapsible": true,
+      "collapsed": true,
+      "children": [
+        "title_color",
+        "text_color",
+        "value_color",
+        "background_color"
+      ]
+    }
+  ]
+}

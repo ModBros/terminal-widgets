@@ -106,6 +106,23 @@
       "min": 1
     },
     {
+      "name": "theme",
+      "label": "Theme",
+      "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
+      "type": "select",
+      "defaultValue": "color",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color (htop, btop)"
+        },
+        {
+          "value": "mono",
+          "label": "Monochrome (top)"
+        }
+      ]
+    },
+    {
       "name": "prompt_color",
       "label": "Prompt",
       "description": "The color of the prompt",
@@ -157,7 +174,7 @@
       "label": "Look and feel",
       "collapsible": true,
       "collapsed": true,
-      "children": ["align", "leader", "font", "font_size"]
+      "children": ["theme", "align", "leader", "font", "font_size"]
     },
     {
       "type": "fieldset",

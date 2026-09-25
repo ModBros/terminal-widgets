@@ -21,3 +21,8 @@ export const lineHeightFactor = 1.25
 
 export const defaultWarningThreshold = 50
 export const defaultCriticalThreshold = 80
+
+// monochrome palette of plain top: one text color, headers in reverse video
+export const monoTextColor = '#e0e0e0'
+export const monoDimColor = '#505050'
+export const monoReverseTextColor = '#000000'

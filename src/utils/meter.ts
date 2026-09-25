@@ -1,12 +1,14 @@
-import { Line, LineBuilder, padEnd, repeat, truncate } from './text'
+import { Line, LineBuilder, padEnd, padStart, repeat, truncate } from './text'
 
 export interface MeterOptions {
   cols: number
   label: string
   labelWidth: number
-  // 'htop' | 'btop' | 'blocks'
+  // 'htop' | 'btop' | 'blocks' | 'top'
   style: string
   valueText: string
+  // minimum width of the value in front of the bar in the top style
+  valueWidth?: number
   percent: number
   labelColor: string
   bracketColor: string
@@ -68,10 +70,45 @@ function appendBar(line: LineBuilder, width: number, options: MeterOptions) {
   }
 }
 
+// wide enough for "100.0%", so the bar does not move while the value changes
+export const minTopValueWidth = 6
+
+function buildTopMeter(line: LineBuilder, options: MeterOptions): Line {
+  const { cols, valueText, percent } = options
+  const width = Math.max(valueText.length, options.valueWidth ?? 0)
+
+  if (width > 0) {
+    line
+      .append(line.length > 0 ? ' ' : '')
+      .append(padStart(valueText, width), { color: options.valueColor })
+      .append(' ')
+  } else if (line.length > 0) {
+    line.append(' ')
+  }
+
+  const inner = Math.max(0, cols - line.length - 2)
+  const filled = Math.round(percent * inner)
+
+  line.append('[', { color: options.bracketColor })
+
+  for (let i = 0; i < inner; i++) {
+    if (i < filled) {
+      line.append('|', { color: options.cellColor((i + 0.5) / inner, percent) })
+    } else {
+      line.append(' ')
+    }
+  }
+
+  line.append(']', { color: options.bracketColor })
+
+  return line.padTo(cols).build()
+}
+
 /**
  * htop:   CPU[||||||||||         42.1%]
  * btop:   CPU ■■■■■■■■■■■■■■■■■■■ 42.1%
  * blocks: CPU ████████▌           42.1%
+ * top:    CPU  42.1% [||||||||||           ]
  */
 export function buildMeter(options: MeterOptions): Line {
   const { cols, label, labelWidth, style, valueText, percent } = options
@@ -79,6 +116,10 @@ export function buildMeter(options: MeterOptions): Line {
 
   if (labelWidth > 0) {
     line.append(padEnd(label, labelWidth), { color: options.labelColor })
+  }
+
+  if (style === 'top') {
+    return buildTopMeter(line, options)
   }
 
   if (style === 'btop' || style === 'blocks') {
