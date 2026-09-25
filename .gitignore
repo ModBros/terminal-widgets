@@ -1,0 +1,7 @@
+.idea/*
+!.idea/
+!.idea/jsonSchemas.xml
+.vscode
+dist
+node_modules
+.env

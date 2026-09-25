@@ -1,0 +1,78 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "!**/*",
+    "*.css",
+    "*.html",
+    "*.md",
+    ".eslintrc.json"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [
+      ".json"
+    ]
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-ignore": {
+          "descriptionFormat": ": TODO fix-for-strict-mode"
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-parameter-properties": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "all",
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/await-thenable": "error",
+    "no-console": "error",
+    "no-nested-ternary": "error",
+    "react/no-danger": "error"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": [
+        "prettier"
+      ],
+      "rules": {
+        "prettier/prettier": "error"
+      }
+    }
+  ]
+}
