@@ -47,16 +47,22 @@ export function useReadings(): ReadingsState {
 interface ReadingCollectorProps {
   index: number
   precision: number | null
+  min: number | null
   max: number | null
   hideUnit: boolean
 }
 
 // must be rendered inside a Repeater item with a "metric" and a "label" field
 export const ReadingCollector = (props: ReadingCollectorProps) => {
-  const { index, precision, max, hideUnit } = props
+  const { index, precision, min, max, hideUnit } = props
   const store = useContext(ReadingsContext)
   const customLabel = useStringField({ field: 'label' })
-  const reading = useMetricReading({ field: 'metric', precision, max })
+  const reading = useMetricReading({
+    field: 'metric',
+    precision,
+    min,
+    max
+  })
 
   const item: ItemReading = {
     label: customLabel || reading.name,

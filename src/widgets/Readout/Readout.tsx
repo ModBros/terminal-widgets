@@ -45,7 +45,12 @@ const Readout: FunctionComponent = () => {
     field: 'cursor_color',
     defaultColor: theme.text
   })
-  const reading = useMetricReading({ field: 'metric', precision, max: null })
+  const reading = useMetricReading({
+    field: 'metric',
+    precision,
+    min: null,
+    max: null
+  })
 
   if (!metricConfigured) {
     return <MissingConfigPlaceholder text={'Please provide a metric'} />

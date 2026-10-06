@@ -10,7 +10,11 @@ import {
 } from '@modbros/dashboard-sdk'
 import styled from 'styled-components'
 import { Lines, Screen } from '../../components/Screen'
-import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
+import {
+  fitRows,
+  useTerminalFont,
+  useTerminalGrid
+} from '../../utils/useTerminalFont'
 import { useLevelColors } from '../../utils/colors'
 import {
   buildMeter,
@@ -41,7 +45,7 @@ function getValueText(reading: ItemReading | undefined, hideValue: boolean) {
 const MeterGridContent: FunctionComponent = () => {
   const font = useTerminalFont()
   const theme = useThemeColors()
-  const { cols } = useTerminalGrid(font)
+  const grid = useTerminalGrid(font)
   const items = useRepeaterField({ field: 'metrics' })
   const readings = useReadings()
   const columnsValue = useNumberField({ field: 'columns', defaultValue: 2 })
@@ -57,6 +61,7 @@ const MeterGridContent: FunctionComponent = () => {
   const hideValue = useCheckboxField({ field: 'hide_value' })
   const hideUnit = useCheckboxField({ field: 'hide_unit' })
   const precision = useNumberField({ field: 'precision' })
+  const min = useNumberField({ field: 'min' })
   const max = useNumberField({ field: 'max' })
   const labelColor = useColorField({
     field: 'text_color',
@@ -85,6 +90,7 @@ const MeterGridContent: FunctionComponent = () => {
   const columns = clamp(Math.floor(columnsValue ?? 1), 1, count)
   const gap = Math.max(0, Math.floor(columnGap ?? 0))
   const rowCount = Math.ceil(count / columns)
+  const cols = fitRows(grid, rowCount)
   const cellCols = Math.max(
     1,
     Math.floor((cols - gap * (columns - 1)) / columns)
@@ -160,6 +166,7 @@ const MeterGridContent: FunctionComponent = () => {
               key={index}
               index={index}
               precision={precision}
+              min={min}
               max={max}
               hideUnit={hideUnit}
             />

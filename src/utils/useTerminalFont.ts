@@ -159,3 +159,14 @@ export function useTerminalGrid(font: TerminalFont): TerminalGrid {
     rows: Math.max(1, Math.floor(height / font.lineHeight))
   }
 }
+
+/**
+ * The columns to lay out `neededRows` rows in. If they do not fit, the screen
+ * shrinks them evenly, which leaves room for more columns, so the lines still
+ * span the full widget width.
+ */
+export function fitRows(grid: TerminalGrid, neededRows: number): number {
+  const scale = Math.min(1, grid.rows / Math.max(1, neededRows))
+
+  return Math.max(1, Math.floor(grid.cols / scale))
+}

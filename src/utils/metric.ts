@@ -3,6 +3,7 @@ import {
   useFormatMetricValue,
   useMemoizedMetricField
 } from '@modbros/dashboard-sdk'
+import { clamp } from './text'
 
 export interface MetricReading {
   channelValue: ChannelValue | null
@@ -11,7 +12,7 @@ export interface MetricReading {
   value: number | null
   text: string
   unit: string
-  max: number
+  range: MetricRange
   percent: number
 }
 
@@ -29,30 +30,44 @@ export function parseNumber(raw: unknown): number | null {
   return null
 }
 
-export function getMaxValue(
-  channelValue: ChannelValue | null,
-  value: number | null,
-  maxOverride: number | null
-): number {
-  if (typeof maxOverride === 'number' && maxOverride > 0) {
-    return maxOverride
-  }
-
-  if (channelValue?.unit?.abbreviation === '%') {
-    return Math.max(100, value ?? 0)
-  }
-
-  const statisticsMax = parseNumber(channelValue?.value?.statistics?.max)
-
-  return Math.max(statisticsMax ?? 0, value ?? 0)
+export interface MetricRange {
+  min: number
+  max: number
+  // false if the max follows the metric and may grow with new values
+  fixedMax: boolean
 }
 
-export function getPercent(value: number | null, max: number): number {
-  if (value === null || max <= 0) {
+// units with a natural upper bound, everything else uses the highest value
+const unitMaxValues: Record<string, number> = {
+  '%': 100,
+  '°C': 100
+}
+
+export function getRange(
+  channelValue: ChannelValue | null,
+  value: number | null,
+  minOverride: number | null,
+  maxOverride: number | null
+): MetricRange {
+  const min = minOverride ?? 0
+
+  if (typeof maxOverride === 'number' && maxOverride > min) {
+    return { min, max: maxOverride, fixedMax: true }
+  }
+
+  const unitMax = unitMaxValues[channelValue?.unit?.abbreviation ?? '']
+  const statisticsMax = parseNumber(channelValue?.value?.statistics?.max)
+  const max = Math.max(unitMax ?? statisticsMax ?? 0, value ?? 0)
+
+  return { min, max, fixedMax: false }
+}
+
+export function getPercent(value: number | null, range: MetricRange): number {
+  if (value === null || range.max <= range.min) {
     return 0
   }
 
-  return Math.min(1, Math.max(0, value / max))
+  return clamp((value - range.min) / (range.max - range.min), 0, 1)
 }
 
 function toText(node: unknown): string {
@@ -106,11 +121,12 @@ function isSameObject<T>(a: T | null, b: T | null): boolean {
 export function useMetricReading(props: {
   field: string
   precision: number | null
+  min: number | null
   max: number | null
   // re-render on every update, even if the value did not change
   everyUpdate?: boolean
 }): MetricReading {
-  const { field, precision, max: maxOverride, everyUpdate } = props
+  const { field, precision, min, max, everyUpdate } = props
   const { channelValue } = useMemoizedMetricField<unknown>(
     everyUpdate
       ? { field, memo: metricValueOf, equals: isSameObject }
@@ -119,7 +135,7 @@ export function useMetricReading(props: {
   const format = useFormatMetricValue()
 
   const value = parseNumber(channelValue?.value?.value)
-  const max = getMaxValue(channelValue, value, maxOverride)
+  const range = getRange(channelValue, value, min, max)
   let text = ''
   let unit = ''
 
@@ -141,7 +157,7 @@ export function useMetricReading(props: {
     value,
     text,
     unit,
-    max,
-    percent: getPercent(value, max)
+    range,
+    percent: getPercent(value, range)
   }
 }

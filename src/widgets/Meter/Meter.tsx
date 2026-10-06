@@ -32,6 +32,7 @@ const Meter: FunctionComponent = () => {
   const hideValue = useCheckboxField({ field: 'hide_value' })
   const hideUnit = useCheckboxField({ field: 'hide_unit' })
   const precision = useNumberField({ field: 'precision' })
+  const min = useNumberField({ field: 'min' })
   const max = useNumberField({ field: 'max' })
   const labelColor = useColorField({
     field: 'text_color',
@@ -50,7 +51,12 @@ const Meter: FunctionComponent = () => {
     defaultColor: theme.dim
   })
   const { cellColor } = useLevelColors()
-  const reading = useMetricReading({ field: 'metric', precision, max })
+  const reading = useMetricReading({
+    field: 'metric',
+    precision,
+    min,
+    max
+  })
 
   if (!metricConfigured) {
     return <MissingConfigPlaceholder text={'Please provide a metric'} />

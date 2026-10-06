@@ -156,10 +156,21 @@ export const Screen = (props: PropsWithChildren<ScreenProps>) => {
 
   const naturalWidth = Math.max(1, cols) * font.charWidth
   const naturalHeight = Math.max(1, rows) * font.lineHeight
-  const scaleX = width > 0 ? width / naturalWidth : 1
+  const fitX = width > 0 ? width / naturalWidth : 1
   const fitY = height > 0 ? height / naturalHeight : 1
-  const scaleY = fill ? fitY : Math.min(1, fitY)
-  const top = fill ? 0 : Math.max(0, (height - naturalHeight * scaleY) / 2)
+  // content larger than the widget shrinks evenly, so the glyphs keep their
+  // shape, otherwise the grid stretches by less than a cell to fill the width
+  const overflow = fitX < 1 || (!fill && fitY < 1)
+  let scaleX = fitX
+  let scaleY = fill ? fitY : Math.min(1, fitY)
+
+  if (overflow) {
+    scaleX = Math.min(fitX, fitY)
+    scaleY = scaleX
+  }
+
+  const top =
+    fill && !overflow ? 0 : Math.max(0, (height - naturalHeight * scaleY) / 2)
 
   return (
     <Viewport

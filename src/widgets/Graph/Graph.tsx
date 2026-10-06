@@ -42,6 +42,7 @@ const Graph: FunctionComponent = () => {
   const reading = useMetricReading({
     field: 'metric',
     precision,
+    min: minValue,
     max: maxValue,
     // the history needs every sample, also repeated ones
     everyUpdate: true
@@ -58,11 +59,13 @@ const Graph: FunctionComponent = () => {
 
   const graphStyle = style ?? 'braille'
   const samples = history.slice(-cols * samplesPerColumn(graphStyle))
-  const min = minValue ?? 0
-  const max = maxValue ?? Math.max(reading.max, ...samples)
+  const { min, max: rangeMax, fixedMax } = reading.range
+  const max = fixedMax ? rangeMax : Math.max(rangeMax, ...samples)
+  // a single row has no room for the header next to the graph
+  const showHeader = !hideHeader && rows > 1
   const lines: Line[] = []
 
-  if (!hideHeader) {
+  if (showHeader) {
     const value = hideUnit
       ? reading.text
       : joinValue(reading.text, reading.unit)
@@ -83,7 +86,7 @@ const Graph: FunctionComponent = () => {
     ...buildGraph({
       samples,
       cols,
-      rows: hideHeader ? rows : Math.max(1, rows - 1),
+      rows: showHeader ? rows - 1 : rows,
       min,
       max,
       style: graphStyle,

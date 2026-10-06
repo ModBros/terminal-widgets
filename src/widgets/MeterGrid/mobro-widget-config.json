@@ -122,9 +122,15 @@
       "min": 0
     },
     {
+      "name": "min",
+      "label": "Min Value",
+      "description": "The value of an empty bar, e.g. 30 for a temperature. Defaults to 0",
+      "type": "number"
+    },
+    {
       "name": "max",
       "label": "Max Value",
-      "description": "The value of a full bar. If not set, percentages use 100 and other metrics use their highest recorded value",
+      "description": "The value of a full bar. If not set, percentages and °C temperatures use 100 and other metrics use their highest recorded value. Set it for metrics without a fixed range, such as clocks or power",
       "type": "number"
     },
     {
@@ -280,6 +286,7 @@
                 "hide_value",
                 "hide_unit",
                 "precision",
+                "min",
                 "max"
               ]
             }

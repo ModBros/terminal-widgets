@@ -14,6 +14,7 @@ Colors you set yourself are kept in both themes.
 A single line text meter like the CPU and memory bars of htop and btop.
 Choose the htop style `CPU[||||||| 42.1%]`, the btop style `CPU ■■■■■■■■■■ 42.1%`, the top style `CPU  42.1% [|||||||   ]` or smooth blocks.
 Bars are colored by a low, warning and critical color, either as a gradient along the bar or by thresholds.
+Percentages and °C temperatures run from 0 to 100. For other metrics set a min and max value, e.g. 30 to 95 for a temperature, otherwise the bar is measured against the highest value seen so far.
 
 **Supports:** Numeric, Duration, and Currency metrics
 

@@ -11,7 +11,11 @@ import {
 } from '@modbros/dashboard-sdk'
 import styled from 'styled-components'
 import { Lines, Screen } from '../../components/Screen'
-import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
+import {
+  fitRows,
+  useTerminalFont,
+  useTerminalGrid
+} from '../../utils/useTerminalFont'
 import { useLevelColors } from '../../utils/colors'
 import { buildMeter } from '../../utils/meter'
 import {
@@ -54,7 +58,7 @@ function compareEntries(a: Entry, b: Entry, direction: number): number {
 const TableContent: FunctionComponent = () => {
   const font = useTerminalFont()
   const theme = useThemeColors()
-  const { cols } = useTerminalGrid(font)
+  const grid = useTerminalGrid(font)
   const items = useRepeaterField({ field: 'rows' })
   const readings = useReadings()
   const headerName = useStringField({
@@ -73,6 +77,7 @@ const TableContent: FunctionComponent = () => {
   const barWidthValue = useNumberField({ field: 'bar_width', defaultValue: 10 })
   const hideUnit = useCheckboxField({ field: 'hide_unit' })
   const precision = useNumberField({ field: 'precision' })
+  const min = useNumberField({ field: 'min' })
   const max = useNumberField({ field: 'max' })
   const textColor = useColorField({
     field: 'text_color',
@@ -122,6 +127,7 @@ const TableContent: FunctionComponent = () => {
     entries = entries.slice(0, limit)
   }
 
+  const cols = fitRows(grid, entries.length + (hideHeader ? 0 : 1))
   const nameHeader = headerName ?? ''
   const valueHeader = headerValue ?? ''
   const values = entries.map(({ reading }) =>
@@ -203,6 +209,7 @@ const TableContent: FunctionComponent = () => {
               key={index}
               index={index}
               precision={precision}
+              min={min}
               max={max}
               hideUnit={hideUnit}
             />

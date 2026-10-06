@@ -106,6 +106,7 @@ const SummaryContent: FunctionComponent = () => {
               key={index}
               index={index}
               precision={precision}
+              min={null}
               max={null}
               hideUnit={hideUnit}
             />
