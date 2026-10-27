@@ -24,36 +24,43 @@ export interface TerminalGrid {
   rows: number
 }
 
-let measureCanvas: HTMLCanvasElement | null = null
+let measureElement: HTMLSpanElement | null = null
 
-function getMeasureContext(
+// measured in the DOM like the rendered text: on Android, canvas text can pick
+// a different fallback font than the DOM for box drawing glyphs
+function measureTextWidth(
+  text: string,
   fontFamily: string,
   fontSize: number
-): CanvasRenderingContext2D | null {
-  measureCanvas = measureCanvas ?? document.createElement('canvas')
-  const context = measureCanvas.getContext('2d')
-
-  if (context) {
-    // an unparsable font is ignored by the canvas and would keep the font of
-    // the previous measurement, so start from a known one
-    context.font = `${fontSize}px monospace`
-    context.font = `${fontSize}px ${fontFamily}`
+): number {
+  if (!measureElement) {
+    measureElement = document.createElement('span')
+    measureElement.setAttribute('aria-hidden', 'true')
+    Object.assign(measureElement.style, {
+      position: 'absolute',
+      left: '-10000px',
+      top: '0',
+      visibility: 'hidden',
+      whiteSpace: 'pre',
+      fontVariantLigatures: 'none'
+    })
+    document.body.appendChild(measureElement)
   }
 
-  return context
+  measureElement.style.fontFamily = fontFamily
+  measureElement.style.fontSize = `${fontSize}px`
+  measureElement.textContent = text
+
+  return measureElement.getBoundingClientRect().width
 }
 
-function measureCharWidth(fontFamily: string, fontSize: number): number {
-  const fallback = fontSize * 0.6
-  const context = getMeasureContext(fontFamily, fontSize)
-
-  if (!context) {
-    return fallback
-  }
-
-  const width = context.measureText('M'.repeat(100)).width / 100
-
-  return width > 0 ? width : fallback
+// averaged over 100 characters, so layout rounding stays below the tolerance
+function measureCharWidth(
+  char: string,
+  fontFamily: string,
+  fontSize: number
+): number {
+  return measureTextWidth(char.repeat(100), fontFamily, fontSize) / 100
 }
 
 /**
@@ -73,8 +80,7 @@ function createCellCheck(
     let fits = cache.get(char)
 
     if (fits === undefined) {
-      const context = getMeasureContext(fontFamily, fontSize)
-      const width = context ? context.measureText(char).width : 0
+      const width = measureCharWidth(char, fontFamily, fontSize)
 
       fits = Math.abs(width - charWidth) < 0.01
       cache.set(char, fits)
@@ -136,7 +142,8 @@ export function useTerminalFont(): TerminalFont {
 
   return useMemo(
     () => {
-      const charWidth = measureCharWidth(fontFamily, fontSize)
+      const measured = measureCharWidth('M', fontFamily, fontSize)
+      const charWidth = measured > 0 ? measured : fontSize * 0.6
 
       return {
         fontFamily,

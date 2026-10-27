@@ -1,6 +1,6 @@
 {
   "name": "@modbros/mobro-terminal-widgets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Terminal style system monitor widgets inspired by top, htop and btop",
   "keywords": [],
   "author": "",
