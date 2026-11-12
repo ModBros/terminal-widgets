@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": ["./node_modules/@modbros/widget-pack-tooling/presets/oxlint.json"],
+  "rules": {}
+}
