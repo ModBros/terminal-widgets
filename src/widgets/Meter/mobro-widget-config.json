@@ -17,7 +17,10 @@
       "name": "label",
       "label": "Label",
       "description": "The text in front of the bar. Defaults to the metric name",
-      "type": "string"
+      "type": "string",
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "hide_label",
@@ -30,7 +33,10 @@
       "label": "Label Width",
       "description": "The width of the label in characters. Longer labels are cut off. Defaults to the length of the label",
       "type": "number",
-      "min": 0
+      "min": 0,
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "style",
@@ -67,14 +73,20 @@
       "name": "hide_unit",
       "label": "Hide Unit",
       "description": "Shows the value without its unit",
-      "type": "checkbox"
+      "type": "checkbox",
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "precision",
       "label": "Precision",
       "description": "The number of decimal places. If not set, it is chosen based on the value",
       "type": "number",
-      "min": 0
+      "min": 0,
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "min",
@@ -122,13 +134,19 @@
       "name": "text_color",
       "label": "Label",
       "description": "The color of the label",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "value_color",
       "label": "Value",
       "description": "The color of the value",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "bracket_color",
@@ -180,9 +198,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
       "type": "slider",
+      "defaultValue": 50,
       "min": 0,
       "max": 100,
-      "defaultValue": 50
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "warning_color",
@@ -195,9 +217,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
       "type": "slider",
+      "defaultValue": 80,
       "min": 0,
       "max": 100,
-      "defaultValue": 80
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "critical_color",
@@ -239,12 +265,20 @@
         {
           "type": "fieldset",
           "label": "Warning",
-          "children": ["warning_threshold", "warning_color"]
+          "children": ["warning_threshold", "warning_color"],
+          "hideIf": {
+            "field": "color_mode",
+            "equals": "solid"
+          }
         },
         {
           "type": "fieldset",
           "label": "Critical",
-          "children": ["critical_threshold", "critical_color"]
+          "children": ["critical_threshold", "critical_color"],
+          "hideIf": {
+            "field": "color_mode",
+            "equals": "solid"
+          }
         }
       ]
     }

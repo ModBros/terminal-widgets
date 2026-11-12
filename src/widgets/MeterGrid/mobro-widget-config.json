@@ -23,7 +23,20 @@
           "name": "label",
           "label": "Label",
           "description": "The label used when the label mode is Name. Defaults to the metric name",
-          "type": "string"
+          "type": "string",
+          "visibleIf": {
+            "all": [
+              {
+                "field": "label_mode",
+                "equals": "name"
+              },
+              {
+                "not": {
+                  "field": "hide_label"
+                }
+              }
+            ]
+          }
         }
       ]
     },
@@ -56,13 +69,29 @@
           "value": "name",
           "label": "Name"
         }
-      ]
+      ],
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "index_offset",
       "label": "First Index",
       "description": "The number of the first meter when the label mode is Index. Defaults to 0",
-      "type": "number"
+      "type": "number",
+      "visibleIf": {
+        "all": [
+          {
+            "field": "label_mode",
+            "equals": "index"
+          },
+          {
+            "not": {
+              "field": "hide_label"
+            }
+          }
+        ]
+      }
     },
     {
       "name": "hide_label",
@@ -75,7 +104,10 @@
       "label": "Label Width",
       "description": "The width of the labels in characters. Defaults to the longest label",
       "type": "number",
-      "min": 0
+      "min": 0,
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "style",
@@ -112,14 +144,20 @@
       "name": "hide_unit",
       "label": "Hide Unit",
       "description": "Shows the values without their units",
-      "type": "checkbox"
+      "type": "checkbox",
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "precision",
       "label": "Precision",
       "description": "The number of decimal places. If not set, it is chosen based on the value",
       "type": "number",
-      "min": 0
+      "min": 0,
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "min",
@@ -167,13 +205,19 @@
       "name": "text_color",
       "label": "Labels",
       "description": "The color of the labels",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "value_color",
       "label": "Values",
       "description": "The color of the values",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_value"
+      }
     },
     {
       "name": "bracket_color",
@@ -225,9 +269,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
       "type": "slider",
+      "defaultValue": 50,
       "min": 0,
       "max": 100,
-      "defaultValue": 50
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "warning_color",
@@ -240,9 +288,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
       "type": "slider",
+      "defaultValue": 80,
       "min": 0,
       "max": 100,
-      "defaultValue": 80
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "critical_color",
@@ -309,12 +361,20 @@
                 {
                   "type": "fieldset",
                   "label": "Warning",
-                  "children": ["warning_threshold", "warning_color"]
+                  "children": ["warning_threshold", "warning_color"],
+                  "hideIf": {
+                    "field": "color_mode",
+                    "equals": "solid"
+                  }
                 },
                 {
                   "type": "fieldset",
                   "label": "Critical",
-                  "children": ["critical_threshold", "critical_color"]
+                  "children": ["critical_threshold", "critical_color"],
+                  "hideIf": {
+                    "field": "color_mode",
+                    "equals": "solid"
+                  }
                 }
               ]
             }

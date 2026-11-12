@@ -23,7 +23,11 @@
           "name": "label",
           "label": "Label",
           "description": "The short name next to the value, e.g. \"us\" or \"total\". Defaults to the metric name",
-          "type": "string"
+          "type": "string",
+          "hideIf": {
+            "field": "label_position",
+            "equals": "none"
+          }
         }
       ]
     },
@@ -133,7 +137,11 @@
       "name": "text_color",
       "label": "Labels",
       "description": "The color of the labels and separators",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "label_position",
+        "equals": "none"
+      }
     },
     {
       "name": "value_color",

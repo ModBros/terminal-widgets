@@ -302,70 +302,110 @@
               "label": "F1 Help",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_1_key", "key_1_label", "key_1_action"]
+              "children": ["key_1_key", "key_1_label", "key_1_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 1
+              }
             },
             {
               "type": "fieldset",
               "label": "F2 Setup",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_2_key", "key_2_label", "key_2_action"]
+              "children": ["key_2_key", "key_2_label", "key_2_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 2
+              }
             },
             {
               "type": "fieldset",
               "label": "F3 Search",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_3_key", "key_3_label", "key_3_action"]
+              "children": ["key_3_key", "key_3_label", "key_3_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 3
+              }
             },
             {
               "type": "fieldset",
               "label": "F4 Filter",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_4_key", "key_4_label", "key_4_action"]
+              "children": ["key_4_key", "key_4_label", "key_4_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 4
+              }
             },
             {
               "type": "fieldset",
               "label": "F5 Tree",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_5_key", "key_5_label", "key_5_action"]
+              "children": ["key_5_key", "key_5_label", "key_5_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 5
+              }
             },
             {
               "type": "fieldset",
               "label": "F6 SortBy",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_6_key", "key_6_label", "key_6_action"]
+              "children": ["key_6_key", "key_6_label", "key_6_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 6
+              }
             },
             {
               "type": "fieldset",
               "label": "F7 Nice -",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_7_key", "key_7_label", "key_7_action"]
+              "children": ["key_7_key", "key_7_label", "key_7_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 7
+              }
             },
             {
               "type": "fieldset",
               "label": "F8 Nice +",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_8_key", "key_8_label", "key_8_action"]
+              "children": ["key_8_key", "key_8_label", "key_8_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 8
+              }
             },
             {
               "type": "fieldset",
               "label": "F9 Kill",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_9_key", "key_9_label", "key_9_action"]
+              "children": ["key_9_key", "key_9_label", "key_9_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 9
+              }
             },
             {
               "type": "fieldset",
               "label": "F10 Quit",
               "collapsible": true,
               "collapsed": true,
-              "children": ["key_10_key", "key_10_label", "key_10_action"]
+              "children": ["key_10_key", "key_10_label", "key_10_action"],
+              "visibleIf": {
+                "field": "key_count",
+                "gte": 10
+              }
             }
           ]
         },

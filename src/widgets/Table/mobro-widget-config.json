@@ -31,13 +31,19 @@
       "name": "header_name",
       "label": "Name Header",
       "description": "The header of the name column. Defaults to NAME",
-      "type": "string"
+      "type": "string",
+      "hideIf": {
+        "field": "hide_header"
+      }
     },
     {
       "name": "header_value",
       "label": "Value Header",
       "description": "The header of the value column. Defaults to VALUE",
-      "type": "string"
+      "type": "string",
+      "hideIf": {
+        "field": "hide_header"
+      }
     },
     {
       "name": "hide_header",
@@ -94,7 +100,10 @@
       "label": "Bar Width",
       "description": "The width of the mini bars in characters. Defaults to 10",
       "type": "number",
-      "min": 1
+      "min": 1,
+      "visibleIf": {
+        "field": "show_bar"
+      }
     },
     {
       "name": "hide_unit",
@@ -113,13 +122,19 @@
       "name": "min",
       "label": "Min Value",
       "description": "The value of an empty mini bar, e.g. 30 for a temperature. Defaults to 0",
-      "type": "number"
+      "type": "number",
+      "visibleIf": {
+        "field": "show_bar"
+      }
     },
     {
       "name": "max",
       "label": "Max Value",
       "description": "The value of a full mini bar. If not set, percentages and °C temperatures use 100 and other metrics use their highest recorded value. Set it for metrics without a fixed range, such as clocks or power",
-      "type": "number"
+      "type": "number",
+      "visibleIf": {
+        "field": "show_bar"
+      }
     },
     {
       "name": "font",
@@ -167,25 +182,39 @@
       "name": "header_text_color",
       "label": "Header Text",
       "description": "The text color of the header",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_header"
+      }
     },
     {
       "name": "header_background_color",
       "label": "Header Background",
       "description": "The background color of the header",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "field": "hide_header"
+      }
     },
     {
       "name": "highlight_text_color",
       "label": "Highlight Text",
       "description": "The text color of the highlighted row",
-      "type": "color"
+      "type": "color",
+      "visibleIf": {
+        "field": "highlight_row",
+        "gt": 0
+      }
     },
     {
       "name": "highlight_background_color",
       "label": "Highlight Background",
       "description": "The background color of the highlighted row",
-      "type": "color"
+      "type": "color",
+      "visibleIf": {
+        "field": "highlight_row",
+        "gt": 0
+      }
     },
     {
       "name": "background_color",
@@ -231,9 +260,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
       "type": "slider",
+      "defaultValue": 50,
       "min": 0,
       "max": 100,
-      "defaultValue": 50
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "warning_color",
@@ -246,9 +279,13 @@
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
       "type": "slider",
+      "defaultValue": 80,
       "min": 0,
       "max": 100,
-      "defaultValue": 80
+      "visibleIf": {
+        "field": "color_mode",
+        "equals": "threshold"
+      }
     },
     {
       "name": "critical_color",
@@ -326,14 +363,25 @@
                 {
                   "type": "fieldset",
                   "label": "Warning",
-                  "children": ["warning_threshold", "warning_color"]
+                  "children": ["warning_threshold", "warning_color"],
+                  "hideIf": {
+                    "field": "color_mode",
+                    "equals": "solid"
+                  }
                 },
                 {
                   "type": "fieldset",
                   "label": "Critical",
-                  "children": ["critical_threshold", "critical_color"]
+                  "children": ["critical_threshold", "critical_color"],
+                  "hideIf": {
+                    "field": "color_mode",
+                    "equals": "solid"
+                  }
                 }
-              ]
+              ],
+              "visibleIf": {
+                "field": "show_bar"
+              }
             }
           ]
         }

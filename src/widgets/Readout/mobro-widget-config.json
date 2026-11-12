@@ -17,7 +17,10 @@
       "name": "label",
       "label": "Label",
       "description": "The text in front of the value. Defaults to the metric name",
-      "type": "string"
+      "type": "string",
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "hide_label",
@@ -29,7 +32,10 @@
       "name": "separator",
       "label": "Separator",
       "description": "The text between label and value. Defaults to \": \"",
-      "type": "string"
+      "type": "string",
+      "hideIf": {
+        "field": "hide_label"
+      }
     },
     {
       "name": "prefix",
@@ -71,7 +77,11 @@
       "name": "leader",
       "label": "Leader",
       "description": "The character that fills the space between label and value when the alignment is Spread, e.g. \".\"",
-      "type": "string"
+      "type": "string",
+      "visibleIf": {
+        "field": "align",
+        "equals": "spread"
+      }
     },
     {
       "name": "hide_unit",
@@ -126,7 +136,18 @@
       "name": "text_color",
       "label": "Label",
       "description": "The color of the label, separator and leader",
-      "type": "color"
+      "type": "color",
+      "hideIf": {
+        "all": [
+          {
+            "field": "hide_label"
+          },
+          {
+            "field": "align",
+            "notEquals": "spread"
+          }
+        ]
+      }
     },
     {
       "name": "value_color",
@@ -138,7 +159,10 @@
       "name": "cursor_color",
       "label": "Cursor",
       "description": "The color of the cursor",
-      "type": "color"
+      "type": "color",
+      "visibleIf": {
+        "field": "show_cursor"
+      }
     },
     {
       "name": "background_color",
