@@ -1,23 +1,20 @@
-import React, { FunctionComponent } from 'react'
-import {
-  useColorField,
-  useSelectField,
-  useStringField
-} from '@modbros/dashboard-sdk'
-import { Lines, Screen } from '../../components/Screen'
-import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
-import { Line, LineBuilder, repeat, truncate } from '../../utils/text'
-import { useThemeColors } from '../../utils/theme'
+import { useColorField, useSelectField, useStringField } from '@modbros/dashboard-sdk';
+import React, { type FunctionComponent } from 'react';
+
+import { Lines, Screen } from '../../components/Screen';
+import { type Line, LineBuilder, repeat, truncate } from '../../utils/text';
+import { useThemeColors } from '../../utils/theme';
+import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont';
 
 interface BorderChars {
-  topLeft: string
-  topRight: string
-  bottomLeft: string
-  bottomRight: string
-  horizontal: string
-  vertical: string
-  titleOpen: string
-  titleClose: string
+  topLeft: string;
+  topRight: string;
+  bottomLeft: string;
+  bottomRight: string;
+  horizontal: string;
+  vertical: string;
+  titleOpen: string;
+  titleClose: string;
 }
 
 const borders: Record<string, BorderChars> = {
@@ -29,7 +26,7 @@ const borders: Record<string, BorderChars> = {
     horizontal: '─',
     vertical: '│',
     titleOpen: '┤',
-    titleClose: '├'
+    titleClose: '├',
   },
   single: {
     topLeft: '┌',
@@ -39,7 +36,7 @@ const borders: Record<string, BorderChars> = {
     horizontal: '─',
     vertical: '│',
     titleOpen: '┤',
-    titleClose: '├'
+    titleClose: '├',
   },
   double: {
     topLeft: '╔',
@@ -49,7 +46,7 @@ const borders: Record<string, BorderChars> = {
     horizontal: '═',
     vertical: '║',
     titleOpen: '╡',
-    titleClose: '╞'
+    titleClose: '╞',
   },
   heavy: {
     topLeft: '┏',
@@ -59,7 +56,7 @@ const borders: Record<string, BorderChars> = {
     horizontal: '━',
     vertical: '┃',
     titleOpen: '┫',
-    titleClose: '┣'
+    titleClose: '┣',
   },
   ascii: {
     topLeft: '+',
@@ -69,79 +66,79 @@ const borders: Record<string, BorderChars> = {
     horizontal: '-',
     vertical: '|',
     titleOpen: '[',
-    titleClose: ']'
-  }
-}
+    titleClose: ']',
+  },
+};
 
 // a title takes its text plus three border cells: "─┤ cpu ├"
 function fitTitle(title: string | null, space: number): string {
   if (!title) {
-    return ''
+    return '';
   }
 
-  const text = truncate(` ${title} `, space - 3)
+  const text = truncate(` ${title} `, space - 3);
 
-  return text.trim() ? text : ''
+  return text.trim() ? text : '';
 }
 
 const Panel: FunctionComponent = () => {
-  const font = useTerminalFont()
-  const theme = useThemeColors()
-  const { cols, rows } = useTerminalGrid(font)
-  const title = useStringField({ field: 'title' })
-  const titleRight = useStringField({ field: 'title_right' })
+  const font = useTerminalFont();
+  const theme = useThemeColors();
+  const { cols, rows } = useTerminalGrid(font);
+  const title = useStringField({ field: 'title' });
+  const titleRight = useStringField({ field: 'title_right' });
   const borderStyle = useSelectField({
     field: 'border_style',
-    defaultValue: 'rounded'
-  })
+    defaultValue: 'rounded',
+  });
   const borderColor = useColorField({
     field: 'border_color',
-    defaultColor: theme.box
-  })
+    defaultColor: theme.box,
+  });
   const titleColor = useColorField({
     field: 'title_color',
-    defaultColor: theme.title
-  })
+    defaultColor: theme.title,
+  });
 
-  const chars = borders[borderStyle ?? 'rounded'] ?? borders.rounded
-  const box = { color: borderColor.toRgbaCss() }
-  const titleStyle = { color: titleColor.toRgbaCss() }
-  const inner = Math.max(0, cols - 2)
+  const chars = borders[borderStyle ?? 'rounded'] ?? borders.rounded;
+  const box = { color: borderColor.toRgbaCss() };
+  const titleStyle = { color: titleColor.toRgbaCss() };
+  const inner = Math.max(0, cols - 2);
 
-  const left = fitTitle(title, inner)
-  const leftLength = left ? left.length + 3 : 0
-  const right = fitTitle(titleRight, inner - leftLength - 1)
-  const rightLength = right ? right.length + 3 : 0
+  const left = fitTitle(title, inner);
+  const leftLength = left ? left.length + 3 : 0;
+  const right = fitTitle(titleRight, inner - leftLength - 1);
+  const rightLength = right ? right.length + 3 : 0;
 
-  const top = new LineBuilder().append(chars.topLeft, box)
+  const top = new LineBuilder().append(chars.topLeft, box);
 
   if (left) {
     top
       .append(chars.horizontal + chars.titleOpen, box)
       .append(left, titleStyle)
-      .append(chars.titleClose, box)
+      .append(chars.titleClose, box);
   }
 
-  top.append(repeat(chars.horizontal, inner - leftLength - rightLength), box)
+  top.append(repeat(chars.horizontal, inner - leftLength - rightLength), box);
 
   if (right) {
     top
       .append(chars.titleOpen, box)
       .append(right, titleStyle)
-      .append(chars.titleClose + chars.horizontal, box)
+      .append(chars.titleClose + chars.horizontal, box);
   }
 
-  const lines: Line[] = [top.append(chars.topRight, box).build()]
+  const lines: Line[] = [top.append(chars.topRight, box).build()];
 
   if (rows > 1) {
     const middle = new LineBuilder()
       .append(chars.vertical, box)
       .append(repeat(' ', inner))
       .append(chars.vertical, box)
-      .build()
+      .build();
 
     for (let row = 0; row < rows - 2; row++) {
-      lines.push(middle)
+      lines.push(middle);
     }
 
     lines.push(
@@ -149,15 +146,15 @@ const Panel: FunctionComponent = () => {
         .append(chars.bottomLeft, box)
         .append(repeat(chars.horizontal, inner), box)
         .append(chars.bottomRight, box)
-        .build()
-    )
+        .build(),
+    );
   }
 
   return (
     <Screen font={font} cols={cols} rows={lines.length} fill>
       <Lines font={font} lines={lines} />
     </Screen>
-  )
-}
+  );
+};
 
-export default Panel
+export default Panel;

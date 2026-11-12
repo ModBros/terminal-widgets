@@ -1,15 +1,15 @@
 export interface SegmentStyle {
-  color?: string
-  background?: string
-  blink?: boolean
-  bold?: boolean
+  color?: string;
+  background?: string;
+  blink?: boolean;
+  bold?: boolean;
 }
 
 export interface Segment extends SegmentStyle {
-  text: string
+  text: string;
 }
 
-export type Line = Segment[]
+export type Line = Segment[];
 
 function isSameStyle(a: SegmentStyle, b: SegmentStyle): boolean {
   return (
@@ -17,7 +17,7 @@ function isSameStyle(a: SegmentStyle, b: SegmentStyle): boolean {
     a.background === b.background &&
     Boolean(a.blink) === Boolean(b.blink) &&
     Boolean(a.bold) === Boolean(b.bold)
-  )
+  );
 }
 
 /**
@@ -25,82 +25,82 @@ function isSameStyle(a: SegmentStyle, b: SegmentStyle): boolean {
  * the same style to keep the number of rendered elements low.
  */
 export class LineBuilder {
-  private segments: Segment[] = []
+  private segments: Segment[] = [];
 
-  length = 0
+  length = 0;
 
   append(text: string, style: SegmentStyle = {}): this {
     if (!text) {
-      return this
+      return this;
     }
 
-    const last = this.segments[this.segments.length - 1]
+    const last = this.segments[this.segments.length - 1];
 
     if (last && isSameStyle(last, style)) {
-      last.text += text
+      last.text += text;
     } else {
       this.segments.push({
         color: style.color,
         background: style.background,
         blink: style.blink,
         bold: style.bold,
-        text
-      })
+        text,
+      });
     }
 
-    this.length += text.length
+    this.length += text.length;
 
-    return this
+    return this;
   }
 
   appendLine(line: Line): this {
     for (const segment of line) {
-      this.append(segment.text, segment)
+      this.append(segment.text, segment);
     }
 
-    return this
+    return this;
   }
 
   padTo(cols: number, style: SegmentStyle = {}): this {
-    return this.append(repeat(' ', cols - this.length), style)
+    return this.append(repeat(' ', cols - this.length), style);
   }
 
   build(): Line {
-    return this.segments
+    return this.segments;
   }
 }
 
 export function repeat(char: string, count: number): string {
-  return count > 0 ? char.repeat(Math.floor(count)) : ''
+  return count > 0 ? char.repeat(Math.floor(count)) : '';
 }
 
 export function truncate(text: string, width: number): string {
   if (width <= 0) {
-    return ''
+    return '';
   }
 
-  return text.length > width ? text.slice(0, width) : text
+  return text.length > width ? text.slice(0, width) : text;
 }
 
 export function padEnd(text: string, width: number): string {
-  return truncate(text, width).padEnd(Math.max(0, width))
+  return truncate(text, width).padEnd(Math.max(0, width));
 }
 
 export function padStart(text: string, width: number): string {
-  return truncate(text, width).padStart(Math.max(0, width))
+  return truncate(text, width).padStart(Math.max(0, width));
 }
 
 export function withBackground(line: Line, background?: string): Line {
   if (!background) {
-    return line
+    return line;
   }
 
   return line.map((segment) => ({
     ...segment,
-    background: segment.background ?? background
-  }))
+    background: segment.background ?? background,
+  }));
 }
 
 export function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value))
+  return Math.min(max, Math.max(min, value));
 }

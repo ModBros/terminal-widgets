@@ -16,16 +16,7 @@
           "description": "The metric of this value",
           "type": "metric",
           "filters": {
-            "valueTypes": [
-              "Numeric",
-              "Duration",
-              "Currency",
-              "String",
-              "Boolean",
-              "DateTime",
-              "DateOnly",
-              "TimeOnly"
-            ]
+            "valueTypes": ["Numeric", "Duration", "Currency", "String", "Boolean", "DateTime", "DateOnly", "TimeOnly"]
           }
         },
         {
@@ -186,12 +177,7 @@
       "label": "Colors",
       "collapsible": true,
       "collapsed": true,
-      "children": [
-        "title_color",
-        "text_color",
-        "value_color",
-        "background_color"
-      ]
+      "children": ["title_color", "text_color", "value_color", "background_color"]
     }
   ]
 }

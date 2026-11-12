@@ -1,4 +1,3 @@
-import React, { FunctionComponent } from 'react'
 import {
   MissingConfigPlaceholder,
   Repeater,
@@ -7,146 +6,129 @@ import {
   useNumberField,
   useRepeaterField,
   useSelectField,
-  useStringField
-} from '@modbros/dashboard-sdk'
-import styled from 'styled-components'
-import { Lines, Screen } from '../../components/Screen'
-import {
-  fitRows,
-  useTerminalFont,
-  useTerminalGrid
-} from '../../utils/useTerminalFont'
-import { useLevelColors } from '../../utils/colors'
-import { buildMeter } from '../../utils/meter'
-import {
-  ItemReading,
-  ReadingCollector,
-  ReadingsProvider,
-  useReadings
-} from '../../utils/readings'
-import {
-  Line,
-  LineBuilder,
-  padEnd,
-  padStart,
-  repeat,
-  withBackground
-} from '../../utils/text'
-import { useThemeColors } from '../../utils/theme'
+  useStringField,
+} from '@modbros/dashboard-sdk';
+import React, { type FunctionComponent } from 'react';
+import styled from 'styled-components';
+
+import { Lines, Screen } from '../../components/Screen';
+import { useLevelColors } from '../../utils/colors';
+import { buildMeter } from '../../utils/meter';
+import { type ItemReading, ReadingCollector, ReadingsProvider, useReadings } from '../../utils/readings';
+import { type Line, LineBuilder, padEnd, padStart, repeat, withBackground } from '../../utils/text';
+import { useThemeColors } from '../../utils/theme';
+import { fitRows, useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont';
 
 const Hidden = styled.div`
   display: none;
-`
+`;
 
 interface Entry {
-  index: number
-  reading?: ItemReading
+  index: number;
+  reading?: ItemReading;
 }
 
 function compareEntries(a: Entry, b: Entry, direction: number): number {
-  const valueA = a.reading?.value ?? null
-  const valueB = b.reading?.value ?? null
+  const valueA = a.reading?.value ?? null;
+  const valueB = b.reading?.value ?? null;
 
   // rows without a numeric value always go last
   if (valueA === null || valueB === null) {
-    return Number(valueA === null) - Number(valueB === null)
+    return Number(valueA === null) - Number(valueB === null);
   }
 
-  return (valueA - valueB) * direction || a.index - b.index
+  return (valueA - valueB) * direction || a.index - b.index;
 }
 
 const TableContent: FunctionComponent = () => {
-  const font = useTerminalFont()
-  const theme = useThemeColors()
-  const grid = useTerminalGrid(font)
-  const items = useRepeaterField({ field: 'rows' })
-  const readings = useReadings()
+  const font = useTerminalFont();
+  const theme = useThemeColors();
+  const grid = useTerminalGrid(font);
+  const items = useRepeaterField({ field: 'rows' });
+  const readings = useReadings();
   const headerName = useStringField({
     field: 'header_name',
-    defaultValue: 'NAME'
-  })
+    defaultValue: 'NAME',
+  });
   const headerValue = useStringField({
     field: 'header_value',
-    defaultValue: 'VALUE'
-  })
-  const hideHeader = useCheckboxField({ field: 'hide_header' })
-  const sort = useSelectField({ field: 'sort', defaultValue: 'none' })
-  const limit = useNumberField({ field: 'limit' })
-  const highlightRow = useNumberField({ field: 'highlight_row' })
-  const showBar = useCheckboxField({ field: 'show_bar' })
-  const barWidthValue = useNumberField({ field: 'bar_width', defaultValue: 10 })
-  const hideUnit = useCheckboxField({ field: 'hide_unit' })
-  const precision = useNumberField({ field: 'precision' })
-  const min = useNumberField({ field: 'min' })
-  const max = useNumberField({ field: 'max' })
+    defaultValue: 'VALUE',
+  });
+  const hideHeader = useCheckboxField({ field: 'hide_header' });
+  const sort = useSelectField({ field: 'sort', defaultValue: 'none' });
+  const limit = useNumberField({ field: 'limit' });
+  const highlightRow = useNumberField({ field: 'highlight_row' });
+  const showBar = useCheckboxField({ field: 'show_bar' });
+  const barWidthValue = useNumberField({ field: 'bar_width', defaultValue: 10 });
+  const hideUnit = useCheckboxField({ field: 'hide_unit' });
+  const precision = useNumberField({ field: 'precision' });
+  const min = useNumberField({ field: 'min' });
+  const max = useNumberField({ field: 'max' });
   const textColor = useColorField({
     field: 'text_color',
-    defaultColor: theme.text
-  }).toRgbaCss()
+    defaultColor: theme.text,
+  }).toRgbaCss();
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: theme.value
-  }).toRgbaCss()
+    defaultColor: theme.value,
+  }).toRgbaCss();
   const emptyColor = useColorField({
     field: 'empty_color',
-    defaultColor: theme.dim
-  }).toRgbaCss()
+    defaultColor: theme.dim,
+  }).toRgbaCss();
   const headerTextColor = useColorField({
     field: 'header_text_color',
-    defaultColor: theme.headerText
-  }).toRgbaCss()
+    defaultColor: theme.headerText,
+  }).toRgbaCss();
   const headerBackgroundColor = useColorField({
     field: 'header_background_color',
-    defaultColor: theme.headerBackground
-  }).toRgbaCss()
+    defaultColor: theme.headerBackground,
+  }).toRgbaCss();
   const highlightTextColor = useColorField({
     field: 'highlight_text_color',
-    defaultColor: theme.highlightText
-  }).toRgbaCss()
+    defaultColor: theme.highlightText,
+  }).toRgbaCss();
   const highlightBackgroundColor = useColorField({
     field: 'highlight_background_color',
-    defaultColor: theme.highlightBackground
-  }).toRgbaCss()
-  const { cellColor } = useLevelColors()
+    defaultColor: theme.highlightBackground,
+  }).toRgbaCss();
+  const { cellColor } = useLevelColors();
 
   if (items.length === 0) {
-    return <MissingConfigPlaceholder text={'Please add at least one row'} />
+    return <MissingConfigPlaceholder text={'Please add at least one row'} />;
   }
 
   let entries: Entry[] = items.map((_item, index) => ({
     index,
-    reading: readings[index]
-  }))
+    reading: readings[index],
+  }));
 
   if (sort === 'asc' || sort === 'desc') {
-    const direction = sort === 'asc' ? 1 : -1
-    entries = [...entries].sort((a, b) => compareEntries(a, b, direction))
+    const direction = sort === 'asc' ? 1 : -1;
+    // toSorted is ES2023 and missing on older Android WebViews
+    // oxlint-disable-next-line unicorn/no-array-sort
+    entries = [...entries].sort((a, b) => compareEntries(a, b, direction));
   }
 
   if (limit && limit > 0) {
-    entries = entries.slice(0, limit)
+    entries = entries.slice(0, limit);
   }
 
-  const cols = fitRows(grid, entries.length + (hideHeader ? 0 : 1))
-  const nameHeader = headerName ?? ''
-  const valueHeader = headerValue ?? ''
-  const values = entries.map(({ reading }) =>
-    reading?.ready ? reading.text : '--'
-  )
-  const valueWidth = Math.max(
-    hideHeader ? 0 : valueHeader.length,
-    ...values.map((value) => value.length)
-  )
-  const barWidth = showBar ? Math.max(1, Math.floor(barWidthValue ?? 10)) : 0
-  const barSpace = barWidth > 0 ? barWidth + 1 : 0
-  const nameWidth = Math.max(0, cols - valueWidth - 1 - barSpace)
-  const lines: Line[] = []
+  const cols = fitRows(grid, entries.length + (hideHeader ? 0 : 1));
+  const nameHeader = headerName ?? '';
+  const valueHeader = headerValue ?? '';
+  const values = entries.map(({ reading }) => (reading?.ready ? reading.text : '--'));
+  const valueWidth = Math.max(hideHeader ? 0 : valueHeader.length, ...values.map((value) => value.length));
+  const barWidth = showBar ? Math.max(1, Math.floor(barWidthValue ?? 10)) : 0;
+  const barSpace = barWidth > 0 ? barWidth + 1 : 0;
+  const nameWidth = Math.max(0, cols - valueWidth - 1 - barSpace);
+  const lines: Line[] = [];
 
   if (!hideHeader) {
     const headerStyle = {
       color: headerTextColor,
-      background: headerBackgroundColor
-    }
+      background: headerBackgroundColor,
+    };
 
     lines.push(
       new LineBuilder()
@@ -154,24 +136,21 @@ const TableContent: FunctionComponent = () => {
         .append(repeat(' ', barSpace), headerStyle)
         .append(` ${padStart(valueHeader, valueWidth)}`, headerStyle)
         .padTo(cols, headerStyle)
-        .build()
-    )
+        .build(),
+    );
   }
 
   entries.forEach(({ reading }, position) => {
-    const highlighted = highlightRow === position + 1
-    const background = highlighted ? highlightBackgroundColor : undefined
+    const highlighted = highlightRow === position + 1;
+    const background = highlighted ? highlightBackgroundColor : undefined;
     const nameStyle = {
       color: highlighted ? highlightTextColor : textColor,
-      background
-    }
-    const line = new LineBuilder().append(
-      padEnd(reading?.label ?? '', nameWidth),
-      nameStyle
-    )
+      background,
+    };
+    const line = new LineBuilder().append(padEnd(reading?.label ?? '', nameWidth), nameStyle);
 
     if (barWidth > 0) {
-      line.append(' ', nameStyle)
+      line.append(' ', nameStyle);
       line.appendLine(
         withBackground(
           buildMeter({
@@ -185,34 +164,27 @@ const TableContent: FunctionComponent = () => {
             valueColor,
             bracketColor: textColor,
             emptyColor,
-            cellColor
+            cellColor,
           }),
-          background
-        )
-      )
+          background,
+        ),
+      );
     }
 
     line.append(` ${padStart(values[position], valueWidth)}`, {
       color: highlighted ? highlightTextColor : valueColor,
-      background
-    })
+      background,
+    });
 
-    lines.push(line.padTo(cols, nameStyle).build())
-  })
+    lines.push(line.padTo(cols, nameStyle).build());
+  });
 
   return (
     <>
       <Hidden>
         <Repeater field={'rows'}>
           {(_item, index) => (
-            <ReadingCollector
-              key={index}
-              index={index}
-              precision={precision}
-              min={min}
-              max={max}
-              hideUnit={hideUnit}
-            />
+            <ReadingCollector key={index} index={index} precision={precision} min={min} max={max} hideUnit={hideUnit} />
           )}
         </Repeater>
       </Hidden>
@@ -221,15 +193,15 @@ const TableContent: FunctionComponent = () => {
         <Lines font={font} lines={lines} />
       </Screen>
     </>
-  )
-}
+  );
+};
 
 const Table: FunctionComponent = () => {
   return (
     <ReadingsProvider>
       <TableContent />
     </ReadingsProvider>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

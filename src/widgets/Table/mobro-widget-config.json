@@ -16,16 +16,7 @@
           "description": "The metric to display in this row",
           "type": "metric",
           "filters": {
-            "valueTypes": [
-              "Numeric",
-              "Duration",
-              "Currency",
-              "String",
-              "Boolean",
-              "DateTime",
-              "DateOnly",
-              "TimeOnly"
-            ]
+            "valueTypes": ["Numeric", "Duration", "Currency", "String", "Boolean", "DateTime", "DateOnly", "TimeOnly"]
           }
         },
         {
@@ -284,13 +275,7 @@
               "type": "fieldset",
               "label": "Rows",
               "collapsible": true,
-              "children": [
-                "sort",
-                "limit",
-                "highlight_row",
-                "hide_unit",
-                "precision"
-              ]
+              "children": ["sort", "limit", "highlight_row", "hide_unit", "precision"]
             },
             {
               "type": "fieldset",

@@ -217,29 +217,14 @@
       "label": "Label & Value",
       "collapsible": true,
       "collapsed": true,
-      "children": [
-        "label",
-        "hide_label",
-        "label_width",
-        "hide_value",
-        "hide_unit",
-        "precision",
-        "min",
-        "max"
-      ]
+      "children": ["label", "hide_label", "label_width", "hide_value", "hide_unit", "precision", "min", "max"]
     },
     {
       "type": "fieldset",
       "label": "Colors",
       "collapsible": true,
       "collapsed": true,
-      "children": [
-        "text_color",
-        "value_color",
-        "bracket_color",
-        "empty_color",
-        "background_color"
-      ]
+      "children": ["text_color", "value_color", "bracket_color", "empty_color", "background_color"]
     },
     {
       "type": "fieldset",

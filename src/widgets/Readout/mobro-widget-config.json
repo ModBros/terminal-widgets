@@ -10,16 +10,7 @@
       "description": "The metric to display",
       "type": "metric",
       "filters": {
-        "valueTypes": [
-          "Numeric",
-          "Duration",
-          "Currency",
-          "String",
-          "Boolean",
-          "DateTime",
-          "DateOnly",
-          "TimeOnly"
-        ]
+        "valueTypes": ["Numeric", "Duration", "Currency", "String", "Boolean", "DateTime", "DateOnly", "TimeOnly"]
       }
     },
     {
@@ -159,15 +150,7 @@
       "type": "fieldset",
       "label": "Text",
       "collapsible": true,
-      "children": [
-        "label",
-        "hide_label",
-        "separator",
-        "prefix",
-        "show_cursor",
-        "hide_unit",
-        "precision"
-      ]
+      "children": ["label", "hide_label", "separator", "prefix", "show_cursor", "hide_unit", "precision"]
     },
     {
       "type": "fieldset",
@@ -181,13 +164,7 @@
       "label": "Colors",
       "collapsible": true,
       "collapsed": true,
-      "children": [
-        "prompt_color",
-        "text_color",
-        "value_color",
-        "cursor_color",
-        "background_color"
-      ]
+      "children": ["prompt_color", "text_color", "value_color", "cursor_color", "background_color"]
     }
   ]
 }

@@ -266,13 +266,7 @@
               "type": "fieldset",
               "label": "Look and feel",
               "collapsible": true,
-              "children": [
-                "style",
-                "columns",
-                "column_gap",
-                "font",
-                "font_size"
-              ]
+              "children": ["style", "columns", "column_gap", "font", "font_size"]
             },
             {
               "type": "fieldset",
@@ -301,13 +295,7 @@
               "type": "fieldset",
               "label": "Text",
               "collapsible": true,
-              "children": [
-                "text_color",
-                "value_color",
-                "bracket_color",
-                "empty_color",
-                "background_color"
-              ]
+              "children": ["text_color", "value_color", "bracket_color", "empty_color", "background_color"]
             },
             {
               "type": "fieldset",

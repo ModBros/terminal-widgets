@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
-import { useSelectField } from '@modbros/dashboard-sdk'
+import { useSelectField } from '@modbros/dashboard-sdk';
+import { useMemo } from 'react';
+
 import {
   defaultBoxColor,
   defaultBracketColor,
@@ -17,24 +18,24 @@ import {
   defaultValueColor,
   monoDimColor,
   monoReverseTextColor,
-  monoTextColor
-} from './constants'
+  monoTextColor,
+} from './constants';
 
 export interface ThemeColors {
-  text: string
-  dim: string
-  box: string
-  title: string
-  bracket: string
-  value: string
-  prompt: string
-  low: string
-  mid: string
-  high: string
-  headerText: string
-  headerBackground: string
-  highlightText: string
-  highlightBackground: string
+  text: string;
+  dim: string;
+  box: string;
+  title: string;
+  bracket: string;
+  value: string;
+  prompt: string;
+  low: string;
+  mid: string;
+  high: string;
+  headerText: string;
+  headerBackground: string;
+  highlightText: string;
+  highlightBackground: string;
 }
 
 const colorTheme: ThemeColors = {
@@ -51,8 +52,8 @@ const colorTheme: ThemeColors = {
   headerText: defaultHeaderTextColor,
   headerBackground: defaultHeaderBackgroundColor,
   highlightText: defaultHighlightTextColor,
-  highlightBackground: defaultHighlightBackgroundColor
-}
+  highlightBackground: defaultHighlightBackgroundColor,
+};
 
 const monoTheme: ThemeColors = {
   text: monoTextColor,
@@ -68,15 +69,15 @@ const monoTheme: ThemeColors = {
   headerText: monoReverseTextColor,
   headerBackground: monoTextColor,
   highlightText: monoReverseTextColor,
-  highlightBackground: monoTextColor
-}
+  highlightBackground: monoTextColor,
+};
 
 /**
  * The default colors of the selected theme. They only fill in the color
  * fields the user left empty, so single colors can still be changed.
  */
 export function useThemeColors(): ThemeColors {
-  const theme = useSelectField({ field: 'theme', defaultValue: 'color' })
+  const theme = useSelectField({ field: 'theme', defaultValue: 'color' });
 
-  return useMemo(() => (theme === 'mono' ? monoTheme : colorTheme), [theme])
+  return useMemo(() => (theme === 'mono' ? monoTheme : colorTheme), [theme]);
 }

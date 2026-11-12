@@ -1,4 +1,3 @@
-import React, { FunctionComponent } from 'react'
 import {
   Loading,
   MissingConfigPlaceholder,
@@ -7,79 +6,79 @@ import {
   useIsMetricFieldConfigured,
   useNumberField,
   useSelectField,
-  useStringField
-} from '@modbros/dashboard-sdk'
-import { Lines, Screen } from '../../components/Screen'
-import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont'
-import { useLevelColors } from '../../utils/colors'
-import { buildGraph, samplesPerColumn } from '../../utils/graph'
-import { joinValue, useMetricReading } from '../../utils/metric'
-import { useValueHistory } from '../../utils/useValueHistory'
-import { Line, LineBuilder, padEnd } from '../../utils/text'
-import { useThemeColors } from '../../utils/theme'
+  useStringField,
+} from '@modbros/dashboard-sdk';
+import React, { type FunctionComponent } from 'react';
+
+import { Lines, Screen } from '../../components/Screen';
+import { useLevelColors } from '../../utils/colors';
+import { buildGraph, samplesPerColumn } from '../../utils/graph';
+import { joinValue, useMetricReading } from '../../utils/metric';
+import { type Line, LineBuilder, padEnd } from '../../utils/text';
+import { useThemeColors } from '../../utils/theme';
+import { useTerminalFont, useTerminalGrid } from '../../utils/useTerminalFont';
+import { useValueHistory } from '../../utils/useValueHistory';
 
 const Graph: FunctionComponent = () => {
-  const font = useTerminalFont()
-  const theme = useThemeColors()
-  const { cols, rows } = useTerminalGrid(font)
-  const metricConfigured = useIsMetricFieldConfigured({ field: 'metric' })
-  const style = useSelectField({ field: 'style', defaultValue: 'braille' })
-  const minValue = useNumberField({ field: 'min' })
-  const maxValue = useNumberField({ field: 'max' })
-  const hideHeader = useCheckboxField({ field: 'hide_header' })
-  const customLabel = useStringField({ field: 'label' })
-  const precision = useNumberField({ field: 'precision' })
-  const hideUnit = useCheckboxField({ field: 'hide_unit' })
+  const font = useTerminalFont();
+  const theme = useThemeColors();
+  const { cols, rows } = useTerminalGrid(font);
+  const metricConfigured = useIsMetricFieldConfigured({ field: 'metric' });
+  const style = useSelectField({ field: 'style', defaultValue: 'braille' });
+  const minValue = useNumberField({ field: 'min' });
+  const maxValue = useNumberField({ field: 'max' });
+  const hideHeader = useCheckboxField({ field: 'hide_header' });
+  const customLabel = useStringField({ field: 'label' });
+  const precision = useNumberField({ field: 'precision' });
+  const hideUnit = useCheckboxField({ field: 'hide_unit' });
   const textColor = useColorField({
     field: 'text_color',
-    defaultColor: theme.text
-  })
+    defaultColor: theme.text,
+  });
   const valueColor = useColorField({
     field: 'value_color',
-    defaultColor: theme.value
-  })
-  const { cellColor } = useLevelColors()
+    defaultColor: theme.value,
+  });
+  const { cellColor } = useLevelColors();
   const reading = useMetricReading({
     field: 'metric',
     precision,
     min: minValue,
     max: maxValue,
     // the history needs every sample, also repeated ones
-    everyUpdate: true
-  })
-  const history = useValueHistory(reading.channelValue)
+    everyUpdate: true,
+  });
+  const history = useValueHistory(reading.channelValue);
 
   if (!metricConfigured) {
-    return <MissingConfigPlaceholder text={'Please provide a metric'} />
+    return <MissingConfigPlaceholder text={'Please provide a metric'} />;
   }
 
   if (!reading.ready) {
-    return <Loading />
+    return <Loading />;
   }
 
-  const graphStyle = style ?? 'braille'
-  const samples = history.slice(-cols * samplesPerColumn(graphStyle))
-  const { min, max: rangeMax, fixedMax } = reading.range
-  const max = fixedMax ? rangeMax : Math.max(rangeMax, ...samples)
+  const graphStyle = style ?? 'braille';
+  const samples = history.slice(-cols * samplesPerColumn(graphStyle));
+  const { min, max: rangeMax, fixedMax } = reading.range;
+  const max = fixedMax ? rangeMax : Math.max(rangeMax, ...samples);
   // a single row has no room for the header next to the graph
-  const showHeader = !hideHeader && rows > 1
-  const lines: Line[] = []
+  const showHeader = !hideHeader && rows > 1;
+  const lines: Line[] = [];
 
   if (showHeader) {
-    const value = hideUnit
-      ? reading.text
-      : joinValue(reading.text, reading.unit)
-    const label = customLabel || reading.name
+    const value = hideUnit ? reading.text : joinValue(reading.text, reading.unit);
+    const label = customLabel || reading.name;
 
     lines.push(
       new LineBuilder()
         .append(padEnd(label, cols - value.length - 1), {
-          color: textColor.toRgbaCss()
+          color: textColor.toRgbaCss(),
         })
         .append(' ')
         .append(value, { color: valueColor.toRgbaCss() })
-        .build()
-    )
+        .build(),
+    );
   }
 
   lines.push(
@@ -90,15 +89,15 @@ const Graph: FunctionComponent = () => {
       min,
       max,
       style: graphStyle,
-      cellColor
-    })
-  )
+      cellColor,
+    }),
+  );
 
   return (
     <Screen font={font} cols={cols} rows={lines.length} fill>
       <Lines font={font} lines={lines} />
     </Screen>
-  )
-}
+  );
+};
 
-export default Graph
+export default Graph;

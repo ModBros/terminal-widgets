@@ -184,14 +184,7 @@
       "label": "Header",
       "collapsible": true,
       "collapsed": true,
-      "children": [
-        "hide_header",
-        "label",
-        "hide_unit",
-        "precision",
-        "text_color",
-        "value_color"
-      ]
+      "children": ["hide_header", "label", "hide_unit", "precision", "text_color", "value_color"]
     },
     {
       "type": "fieldset",
