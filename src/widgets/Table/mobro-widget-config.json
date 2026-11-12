@@ -49,20 +49,23 @@
       "name": "sort",
       "label": "Sort",
       "description": "Sorts the rows by their numeric value. Rows without a numeric value go last",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "none",
       "options": [
         {
           "value": "none",
-          "label": "None"
+          "label": "None",
+          "icon": "lu/LuMinus"
         },
         {
           "value": "desc",
-          "label": "Highest first"
+          "label": "Highest first",
+          "icon": "lu/LuArrowDownWideNarrow"
         },
         {
           "value": "asc",
-          "label": "Lowest first"
+          "label": "Lowest first",
+          "icon": "lu/LuArrowUpNarrowWide"
         }
       ]
     },
@@ -135,7 +138,7 @@
       "name": "theme",
       "label": "Theme",
       "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "color",
       "options": [
         {
@@ -200,7 +203,7 @@
       "name": "color_mode",
       "label": "Color Mode",
       "description": "Gradient colors every cell by its position in the bar, Threshold colors each bar by its current value, Solid always uses the low color",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "gradient",
       "options": [
         {
@@ -227,9 +230,10 @@
       "name": "warning_threshold",
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 50
     },
     {
       "name": "warning_color",
@@ -241,9 +245,10 @@
       "name": "critical_threshold",
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 80
     },
     {
       "name": "critical_color",

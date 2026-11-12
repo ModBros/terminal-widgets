@@ -45,7 +45,7 @@
       "name": "label_mode",
       "label": "Label Mode",
       "description": "Index numbers the meters like htop does with CPU cores, Name uses the label or the metric name",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "index",
       "options": [
         {
@@ -81,7 +81,7 @@
       "name": "style",
       "label": "Style",
       "description": "htop draws pipes inside brackets with the value in the bar, btop draws squares with the value behind the bar, blocks draws a smooth bar with partial blocks, top draws the value in front of a plain bar",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "htop",
       "options": [
         {
@@ -150,7 +150,7 @@
       "name": "theme",
       "label": "Theme",
       "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "color",
       "options": [
         {
@@ -197,7 +197,7 @@
       "name": "color_mode",
       "label": "Color Mode",
       "description": "Gradient colors every cell by its position in the bar, Threshold colors each bar by its current value, Solid always uses the low color",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "gradient",
       "options": [
         {
@@ -224,9 +224,10 @@
       "name": "warning_threshold",
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 50
     },
     {
       "name": "warning_color",
@@ -238,9 +239,10 @@
       "name": "critical_threshold",
       "label": "Threshold (%)",
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 80
     },
     {
       "name": "critical_color",

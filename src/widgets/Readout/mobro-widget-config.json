@@ -47,20 +47,23 @@
       "name": "align",
       "label": "Alignment",
       "description": "Spread puts the label on the left and the value on the right",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "left",
       "options": [
         {
           "value": "left",
-          "label": "Left"
+          "label": "Left",
+          "icon": "lu/LuAlignLeft"
         },
         {
           "value": "right",
-          "label": "Right"
+          "label": "Right",
+          "icon": "lu/LuAlignRight"
         },
         {
           "value": "spread",
-          "label": "Spread"
+          "label": "Spread",
+          "icon": "lu/LuMoveHorizontal"
         }
       ]
     },
@@ -100,7 +103,7 @@
       "name": "theme",
       "label": "Theme",
       "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "color",
       "options": [
         {

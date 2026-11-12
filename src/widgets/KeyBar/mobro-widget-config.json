@@ -8,10 +8,11 @@
       "name": "key_count",
       "label": "Number of Keys",
       "description": "How many keys are shown, from 1 to 10. Defaults to 10",
-      "type": "number",
+      "type": "slider",
+      "defaultValue": 10,
       "min": 1,
       "max": 10,
-      "defaultValue": 10
+      "step": 1
     },
     {
       "name": "key_1_key",
@@ -243,7 +244,7 @@
       "name": "theme",
       "label": "Theme",
       "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "color",
       "options": [
         {

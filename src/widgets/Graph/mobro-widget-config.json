@@ -17,7 +17,7 @@
       "name": "style",
       "label": "Style",
       "description": "Braille fits two values per character and four steps per line like btop, blocks fits one value per character and eight steps per line",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "braille",
       "options": [
         {
@@ -84,7 +84,7 @@
       "name": "theme",
       "label": "Theme",
       "description": "Color uses the htop and btop palette. Monochrome draws everything in one text color with reverse video headers, like plain top. Colors you set yourself are kept",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "color",
       "options": [
         {
@@ -119,7 +119,7 @@
       "name": "color_mode",
       "label": "Color Mode",
       "description": "Gradient fades from the low color at the bottom to the critical color at the top, Threshold draws hard color bands at the thresholds, Solid always uses the low color",
-      "type": "select",
+      "type": "button-group",
       "defaultValue": "gradient",
       "options": [
         {
@@ -146,9 +146,10 @@
       "name": "warning_threshold",
       "label": "Threshold (%)",
       "description": "Height in percent at which the threshold mode switches to the warning color. Defaults to 50",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 50
     },
     {
       "name": "warning_color",
@@ -160,9 +161,10 @@
       "name": "critical_threshold",
       "label": "Threshold (%)",
       "description": "Height in percent at which the threshold mode switches to the critical color. Defaults to 80",
-      "type": "number",
+      "type": "slider",
       "min": 0,
-      "max": 100
+      "max": 100,
+      "defaultValue": 80
     },
     {
       "name": "critical_color",
