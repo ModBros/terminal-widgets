@@ -101,7 +101,25 @@
       "type": "fieldset",
       "label": "Look and feel",
       "collapsible": true,
-      "children": ["theme", "border_style", "font", "font_size"]
+      "children": [
+        "theme",
+        "border_style",
+        {
+          "type": "row",
+          "children": [
+            {
+              "type": "column",
+              "span": "8 s-12",
+              "children": ["font"]
+            },
+            {
+              "type": "column",
+              "span": "4 s-12",
+              "children": ["font_size"]
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "fieldset",

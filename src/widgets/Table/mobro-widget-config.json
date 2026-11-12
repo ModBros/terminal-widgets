@@ -261,12 +261,12 @@
       "description": "Percentage of the max value at which the threshold mode switches to the warning color. Defaults to 50",
       "type": "slider",
       "defaultValue": 50,
-      "min": 0,
-      "max": 100,
       "visibleIf": {
         "field": "color_mode",
         "equals": "threshold"
-      }
+      },
+      "min": 0,
+      "max": 100
     },
     {
       "name": "warning_color",
@@ -280,12 +280,12 @@
       "description": "Percentage of the max value at which the threshold mode switches to the critical color. Defaults to 80",
       "type": "slider",
       "defaultValue": 80,
-      "min": 0,
-      "max": 100,
       "visibleIf": {
         "field": "color_mode",
         "equals": "threshold"
-      }
+      },
+      "min": 0,
+      "max": 100
     },
     {
       "name": "critical_color",
@@ -311,7 +311,25 @@
               "type": "fieldset",
               "label": "Header",
               "collapsible": true,
-              "children": ["header_name", "header_value", "hide_header"]
+              "children": [
+                {
+                  "type": "row",
+                  "hideIf": {
+                    "field": "hide_header"
+                  },
+                  "children": [
+                    {
+                      "type": "column",
+                      "children": ["header_name"]
+                    },
+                    {
+                      "type": "column",
+                      "children": ["header_value"]
+                    }
+                  ]
+                },
+                "hide_header"
+              ]
             },
             {
               "type": "fieldset",
@@ -323,13 +341,48 @@
               "type": "fieldset",
               "label": "Bars",
               "collapsible": true,
-              "children": ["show_bar", "bar_width", "min", "max"]
+              "children": [
+                "show_bar",
+                "bar_width",
+                {
+                  "type": "row",
+                  "visibleIf": {
+                    "field": "show_bar"
+                  },
+                  "children": [
+                    {
+                      "type": "column",
+                      "children": ["min"]
+                    },
+                    {
+                      "type": "column",
+                      "children": ["max"]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "fieldset",
               "label": "Font",
               "collapsible": true,
-              "children": ["font", "font_size"]
+              "children": [
+                {
+                  "type": "row",
+                  "children": [
+                    {
+                      "type": "column",
+                      "span": "8 s-12",
+                      "children": ["font"]
+                    },
+                    {
+                      "type": "column",
+                      "span": "4 s-12",
+                      "children": ["font_size"]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

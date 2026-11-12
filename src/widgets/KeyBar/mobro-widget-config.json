@@ -417,7 +417,25 @@
               "type": "fieldset",
               "label": "Layout",
               "collapsible": true,
-              "children": ["label_width", "hide_fill", "font", "font_size"]
+              "children": [
+                "label_width",
+                "hide_fill",
+                {
+                  "type": "row",
+                  "children": [
+                    {
+                      "type": "column",
+                      "span": "8 s-12",
+                      "children": ["font"]
+                    },
+                    {
+                      "type": "column",
+                      "span": "4 s-12",
+                      "children": ["font_size"]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "fieldset",

@@ -178,7 +178,24 @@
       "label": "Look and feel",
       "collapsible": true,
       "collapsed": true,
-      "children": ["theme", "font", "font_size"]
+      "children": [
+        "theme",
+        {
+          "type": "row",
+          "children": [
+            {
+              "type": "column",
+              "span": "8 s-12",
+              "children": ["font"]
+            },
+            {
+              "type": "column",
+              "span": "4 s-12",
+              "children": ["font_size"]
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "fieldset",

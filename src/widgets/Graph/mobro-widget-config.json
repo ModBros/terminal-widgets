@@ -163,12 +163,12 @@
       "description": "Height in percent at which the threshold mode switches to the warning color. Defaults to 50",
       "type": "slider",
       "defaultValue": 50,
-      "min": 0,
-      "max": 100,
       "visibleIf": {
         "field": "color_mode",
         "equals": "threshold"
-      }
+      },
+      "min": 0,
+      "max": 100
     },
     {
       "name": "warning_color",
@@ -182,12 +182,12 @@
       "description": "Height in percent at which the threshold mode switches to the critical color. Defaults to 80",
       "type": "slider",
       "defaultValue": 80,
-      "min": 0,
-      "max": 100,
       "visibleIf": {
         "field": "color_mode",
         "equals": "threshold"
-      }
+      },
+      "min": 0,
+      "max": 100
     },
     {
       "name": "critical_color",
@@ -202,7 +202,38 @@
       "type": "fieldset",
       "label": "Look and feel",
       "collapsible": true,
-      "children": ["theme", "style", "min", "max", "font", "font_size"]
+      "children": [
+        "theme",
+        "style",
+        {
+          "type": "row",
+          "children": [
+            {
+              "type": "column",
+              "children": ["min"]
+            },
+            {
+              "type": "column",
+              "children": ["max"]
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "children": [
+            {
+              "type": "column",
+              "span": "8 s-12",
+              "children": ["font"]
+            },
+            {
+              "type": "column",
+              "span": "4 s-12",
+              "children": ["font_size"]
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "fieldset",
