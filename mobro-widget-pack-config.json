@@ -2,5 +2,7 @@
   "name": "modbros_terminal",
   "displayName": "Terminal",
   "description": "Terminal style system monitor widgets inspired by top, htop and btop. Text meters, top style summary lines, braille graphs, box drawing panels, process style tables and function key bars, all drawn with plain characters in a monospace font.",
-  "author": "ModBros"
+  "author": "ModBros",
+  "tags": ["terminal", "console", "text", "monospace", "retro", "htop", "btop", "top"],
+  "repositoryUrl": "https://github.com/ModBros/terminal-widgets"
 }
